@@ -32,7 +32,12 @@ class Level1Scene extends Phaser.Scene {
             frameRate:8,
             repeat:-1
         });
-        
+        this.anims.create({
+            key:'left',
+            frames:this.anims.generateFrameNumbers("player",{start:4,end:7}),
+            frameRate:8,
+            repeat:-1
+        });
     
     }
 
