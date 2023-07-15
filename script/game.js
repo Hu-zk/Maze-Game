@@ -1,10 +1,12 @@
 
 
-import NameScene from "./nameScene.js"
+import Level2Scene from "./level2Scene.js"
+import Level1Scene from "./level1Scene.js"
 import TitleScene from "./titleScene.js"
 import MenuScene from "./menuScene.js"
 
-const name_scene = new NameScene()
+const level2_scene = new Level2Scene()
+const level1_scene = new Level1Scene()
 const title_scene = new TitleScene()
 const menu_scene = new MenuScene()
 
@@ -24,7 +26,8 @@ const config = {
 
 const game = new Phaser.Game(config)
 
-game.scene.add('nameScene', name_scene)
+game.scene.add('level1Scene', level1_scene)
+game.scene.add('level2Scene', level2_scene)
 game.scene.add('titleScene', title_scene)
 game.scene.add('menuScene', menu_scene)
 

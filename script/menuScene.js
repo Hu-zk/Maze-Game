@@ -31,6 +31,7 @@ class MenuScene extends Phaser.Scene {
     }
 
     create(data){
+        
         this.menu_scene_image =this.add.sprite(0,0,'menuSceneBg')
         this.menu_scene_image.setScale(0.762)
         this.menu_scene_image.x = 800/2
@@ -53,8 +54,8 @@ class MenuScene extends Phaser.Scene {
         this.level_button.setInteractive({useHandCursor: true})
         this.level_button.on('pointerdown',() => this.clickLevelButton())
 
-        // this.menu_music = this.sound.add('menuMusic')
-        // this.menu_music.play({loop:true})
+        this.menu_music = this.sound.add('menuMusic')
+        this.menu_music.play({loop:true})
         
         this.mic_image =this.add.sprite(0,0,'mic')
         this.mic_image.setScale(0.1)
@@ -68,10 +69,10 @@ class MenuScene extends Phaser.Scene {
     }
 
     clickStartButton(){
-        this.scene.start('nameScene')
+        this.scene.start('level1Scene')
     }
     clickLevelButton(){
-        this.scene.start('nameScene')
+        this.scene.start('level1Scene')
     }
     clickmic(){
 
