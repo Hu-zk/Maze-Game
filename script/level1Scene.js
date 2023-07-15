@@ -24,8 +24,7 @@ class Level1Scene extends Phaser.Scene {
         this.level1_scene_bg.setScale(0.75)
         this.level1_scene_bg.x = 800/2
         this.level1_scene_bg.y = 600/2
-        this.add.sprite(150,250,'player').setScale(0.5)
-        
+        this.add.sprite(150,250,'player').setScale(0.5)        
 
         this.anims.create({
             key:'right',
