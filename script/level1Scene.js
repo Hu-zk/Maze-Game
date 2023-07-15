@@ -51,7 +51,7 @@ class Level1Scene extends Phaser.Scene {
             repeat:-1
         });
         this.cursors = this.input.keyboard.createCursorKeys();
-        this.player.setCollideWorldBounds(true);
+        this.physics.world.setBounds(0, 0, this.sys.game.config.width, this.sys.game.config.height);
 
     
     }
