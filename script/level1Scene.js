@@ -50,6 +50,7 @@ class Level1Scene extends Phaser.Scene {
             frameRate:8,
             repeat:-1
         });
+        this.cursors = this.input.keyboard.createCursorKeys();
     
     }
 
