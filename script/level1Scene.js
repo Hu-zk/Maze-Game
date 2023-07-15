@@ -23,7 +23,9 @@ class Level1Scene extends Phaser.Scene {
         this.level1_scene_bg =this.add.sprite(0,0,'level1_scene_bg')
         this.level1_scene_bg.setScale(0.75)
         this.level1_scene_bg.x = 800/2
-        this.level1_scene_bg.y = 600/2        
+        this.level1_scene_bg.y = 600/2
+        this.physics.add.sprite(150,250,'player');
+        this.player.scale=0.2;
     }
 
     update (time,delta){
