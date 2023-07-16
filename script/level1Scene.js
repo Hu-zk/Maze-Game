@@ -105,7 +105,7 @@ class Level1Scene extends Phaser.Scene {
     this.mic_on_image.setInteractive({useHandCursor: true})
     this.mic_on_image.on('pointerdown',() => this.volumeButton())
     this.volume_on = true   
-    
+
     this.game_music = this.sound.add('gameMusic')
     this.game_music.play({loop:true})
     }
@@ -113,19 +113,19 @@ class Level1Scene extends Phaser.Scene {
     update(){
         this.player.setVelocity(0);
         if (this.cursors.left.isDown) {
-            this.player.setVelocityX(-50);
+            this.player.setVelocityX(-60);
             this.player.anims.play('left', true);
         } 
         else if (this.cursors.right.isDown) {
-            this.player.setVelocityX(50);
+            this.player.setVelocityX(60);
             this.player.anims.play('right', true);
         }
         else if (this.cursors.up.isDown) {
-            this.player.setVelocityY(-50);
+            this.player.setVelocityY(-60);
             this.player.anims.play('up', true);
         }
         else if (this.cursors.down.isDown) {
-            this.player.setVelocityY(50);
+            this.player.setVelocityY(60);
             this.player.anims.play('down', true);
         } 
         else {
