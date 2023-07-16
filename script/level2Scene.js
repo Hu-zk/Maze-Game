@@ -130,10 +130,10 @@ class Level2Scene extends Phaser.Scene {
         this.restart_icon.setInteractive({useHandCursor: true})
         this.restart_icon.on('pointerdown',() => this.restartIcon())
 
-        //finding the near coins to the path
-        this.pickCoinNear = function(pl, coin){
+        //Finding the far coins from the path
+        this.pickCoinFar = function(pl, coin){
             coin.destroy();
-            this.score += 1;
+            this.score += 5;
             console.log('your score is : ' + this.score );
         }
 
@@ -143,7 +143,7 @@ class Level2Scene extends Phaser.Scene {
             this.score += 1;
             console.log('your score is : ' + this.score );
         }
-        
+
         this.hitFinish = function (pl, finito) {
             
             this.board = this.add.image(90, 100, 'board').setOrigin(0, 0);
