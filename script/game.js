@@ -12,13 +12,13 @@ const menu_scene = new MenuScene()
 
 
 const config = {
-    type: Phaser.AuTO,
+    type: Phaser.AUTO,
     width:800,
     height: 600,
     physics:{
         default: 'arcade',
         arcade: {
-            debug: true
+            debug: false
         }
     },
 

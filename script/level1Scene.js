@@ -21,7 +21,7 @@ class Level1Scene extends Phaser.Scene {
 
       this.load.image('player', '../assets/Player1.png');
       this.load.image('coin','../assets/coin-box.png')
-      this.load.image('finish','../assets/finish-flags-hi.png')
+      this.load.image('finish','../assets/finish.jpeg')
 
     }
 
@@ -110,8 +110,8 @@ class Level1Scene extends Phaser.Scene {
 
       //Creating and Positioning the Finish point
 
-      this.finish = this.physics.add.sprite(620, 55,'finish')
-      this.finish.setScale(0.12)
+      this.finish = this.physics.add.sprite(625, 60,'finish')
+      this.finish.setScale(0.045, 0.05)
 
 
 
@@ -150,6 +150,9 @@ class Level1Scene extends Phaser.Scene {
       this.physics.add.overlap(player, this.coin6, this.pickCoinNear, null, this);
       this.physics.add.overlap(player, this.coin7, this.pickCoinNear, null, this);
       this.physics.add.overlap(player, this.coin8, this.pickCoinNear, null, this);
+
+
+      
       
 
       this.update = function() {
