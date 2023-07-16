@@ -20,6 +20,7 @@ class Level1Scene extends Phaser.Scene {
 
 
       this.load.image('player', '../assets/Player1.png');
+      this.load.image('coin','../assets/coin-box.png')
 
     }
 
@@ -103,10 +104,28 @@ class Level1Scene extends Phaser.Scene {
          // Hide the green pointer
         player.body.debugShowDirection = false;
     
-        // Any logic Your code here
+        // Any logic Your code herethis.coin1 = this.add.sprite(80, 350,'coin')
+        this.coin1 = this.add.sprite(80, 350,'coin')
+      this.coin2 = this.add.sprite(700, 500,'coin')
+      this.coin3 = this.add.sprite(80, 90,'coin')
+      this.coin4 = this.add.sprite(540, 350,'coin')
+      this.coin5 = this.add.sprite(700, 90,'coin')
+
+      this.coin1.setScale(0.15)
+      this.coin2.setScale(0.15)
+      this.coin3.setScale(0.15)
+      this.coin4.setScale(0.15)
+      this.coin5.setScale(0.15)
+
+      this.score = 0;
+      this.physics.add.overlap(player, this.coin1, this.pickCoinNear, null, this);
+      this.physics.add.collider(player,this.coin2);
+      this.physics.add.collider(player,this.coin3);
+      this.physics.add.collider(player,this.coin4);
+      this.physics.add.collider(player,this.coin5);
+
       };
     }
-
     update (time,delta){
   
     }
