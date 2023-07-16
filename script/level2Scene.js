@@ -112,6 +112,9 @@ class Level2Scene extends Phaser.Scene {
 
         //Setting the character's speed
         this.speed = 100;
+
+
+        this.movable = true;
     }
 
   
