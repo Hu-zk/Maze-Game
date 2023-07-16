@@ -1,0 +1,44 @@
+{
+    "activeFile": "maze.json",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "#tilemap_packed": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        },
+        "maze.json": {
+            "scale": 1.2836875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 400.40897804177416,
+                "y": 272.26252495252936
+            }
+        },
+        "maze.json#tilemap_packed": {
+            "scaleInDock": 1
+        },
+        "maze.tmj": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 354,
+                "y": 288.5
+            }
+        },
+        "maze.tmj#tilemap_packed": {
+            "scaleInDock": 1.5
+        }
+    },
+    "map.lastUsedFormat": "json",
+    "openFiles": [
+        "maze.json"
+    ],
+    "project": "T-App.tiled-project",
+    "recentFiles": [
+        "maze.json",
+        "maze.tmj"
+    ]
+}

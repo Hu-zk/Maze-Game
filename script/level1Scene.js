@@ -14,6 +14,13 @@ class Level1Scene extends Phaser.Scene {
     preload(){
         console.log('level1 Scene is working')
         this.load.image('level1_scene_bg','../assets/menuBg.jpg')
+
+
+        this.load.image('background', '../assets/Forest-BG2.jfif');
+        this.load.image('dungeon_tiles', '../assets/tilemap_packed.png');
+        this.load.tilemapTiledJSON('map', '../json/tilesLayer.json');
+
+
         let player=this.load.spritesheet('player','assets/player.png',
         {
             frameWidth:126.41,
@@ -26,9 +33,32 @@ class Level1Scene extends Phaser.Scene {
         this.level1_scene_bg.setScale(0.75)
         this.level1_scene_bg.x = 800/2
         this.level1_scene_bg.y = 600/2
+
+        const background = this.add.image(0, 0, 'background').setOrigin(0, 0);
+        background.setScale(this.game.config.width / background.width, this.game.config.height / background.height);
+  
+
+        const map = this.make.tilemap({ key: 'map' });
+        const tileset = map.addTilesetImage('tilemap_packed', 'dungeon_tiles');
+        const Layer = map.createLayer('Tile Layer 1', tileset, 0, 0);
+        const tilesLayer= map.createLayer("tileslayer",tileset,0,0);
+  
+    // Calculate the position to center the tileset
+        const centerX = (this.game.config.width - map.widthInPixels) / 2;
+        const centerY = (this.game.config.height - map.heightInPixels) / 2;
+
+        // Move the tileset layer to the center
+        Layer.setPosition(centerX, centerY);
+        tilesLayer.setPosition(centerX,centerY);
+
+
+
+
+
+
         this.input.keyboard.enabled=true;   
-        let player=this.player=this.physics.add.sprite(150,250,'player');
-        this.player.scale=0.5;
+        let player=this.player=this.physics.add.sprite(390,540,'player');
+        this.player.scale=0.2;
         this.player.depth=1;
         this.anims.create({
             key:'right',
@@ -64,6 +94,8 @@ class Level1Scene extends Phaser.Scene {
         });    
         this.cursors = this.input.keyboard.createCursorKeys();    
         this.player.setCollideWorldBounds(true);
+        this.physics.add.collider(player,tilesLayer);
+        tilesLayer.setCollisionBetween(0,41);
     
     }
 
