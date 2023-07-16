@@ -149,13 +149,13 @@ class Level2Scene extends Phaser.Scene {
 
          //Creating and Positioning the coins
     this.coin1 = this.physics.add.sprite(80, 350,'coin')
-    this.coin2 = this.physics.add.sprite(700, 500,'coin')
+    this.coin2 = this.physics.add.sprite(700, 450,'coin')
     this.coin3 = this.physics.add.sprite(80, 110,'coin')
     this.coin4 = this.physics.add.sprite(540, 350,'coin')
-    this.coin5 = this.physics.add.sprite( 650, 170,'coin')
-    this.coin6 = this.physics.add.sprite(400, 450,'coin')
-    this.coin7 = this.physics.add.sprite(250, 200,'coin')
-    this.coin8 = this.physics.add.sprite(360, 330,'coin')
+    this.coin5 = this.physics.add.sprite( 650, 155,'coin')
+    this.coin6 = this.physics.add.sprite(400, 440,'coin')
+    this.coin7 = this.physics.add.sprite(255, 200,'coin')
+    this.coin8 = this.physics.add.sprite(360, 300,'coin')
 
     //Creating and Positioning the Finish point
 
