@@ -5,14 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
-    <link rel="stylesheet" href="style/styl.css">
-    <title>MAZE GAME</title>
+    <link rel="stylesheet" href="/style/landing-page-style.css">
+    <title>Underground Maze</title>
 </head>
 
 <body>
+    
+    <section>
+        <h2 id="text">Underground<br><br>Maze</h2>
+        <img src="assets/landing-page-img/bird1.png" id="bird1">
+        <img src="assets/landing-page-img/bird2.png" id="bird2">
+        <img src="assets/landing-page-img/forest.png" id="forest">
+        <a href="#sec" id="btn">Quick Start<sub id="enter">or Press Enter To Start</sub></a>
+        </a>
+        <img src="assets/landing-page-img/rocks.png" id="rocks">
+        <img src="assets/landing-page-img/grass1.png" id="water1">
+        <img src="assets/landing-page-img/grass2.png" id="water2" >
+    </section>
+
+    <div class="sec" id="sec">
+        <h2 id="welcome">Welcome to the Game</h2>
+        <script type="module" src="script/game.js"></script>
+
+    </div> 
+
+    <script src="script/landing-page-script.js"></script>
 
 
-    <script type="module" src="script/game.js"></script>
+
 </body>
 
 </html>
