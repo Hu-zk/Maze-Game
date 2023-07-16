@@ -149,8 +149,6 @@ class Level1Scene extends Phaser.Scene {
       this.movable = false
     }
 
-    this.hitFinish()
-
     //Creating and Positioning the coins
     this.coin1 = this.physics.add.sprite(80, 350,'coin')
     this.coin2 = this.physics.add.sprite(700, 500,'coin')
