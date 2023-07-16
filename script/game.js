@@ -1,5 +1,3 @@
-
-
 import Level2Scene from "./level2Scene.js"
 import Level1Scene from "./level1Scene.js"
 import TitleScene from "./titleScene.js"
@@ -11,14 +9,14 @@ const title_scene = new TitleScene()
 const menu_scene = new MenuScene()
 
 const config = {
-    type: Phaser.AuTO,
+    type: Phaser.AUTO,
     width:800,
     height: 600,
     scene:[TitleScene,MenuScene,Level1Scene,Level2Scene],
     physics:{
         default: 'arcade',
         arcade: {
-            debug: true
+            debug: false
         }
     },
 

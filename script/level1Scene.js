@@ -115,6 +115,75 @@ class Level1Scene extends Phaser.Scene {
     this.game_music = this.sound.add('gameMusic')
     this.game_music.play({loop:true})
 
+    // Calculate the position to center the tileset
+    const centerX = (this.game.config.width - map.widthInPixels) / 2;
+    const centerY = (this.game.config.height - map.heightInPixels) / 2;
+
+    // Move the tileset layer to the center
+    Layer.setPosition(centerX, centerY);
+    tilesLayer.setPosition(centerX,centerY);
+
+    this.input.keyboard.enabled=true;   
+    let player= this.player = this.physics.add.sprite(390,540,'player');
+    this.player.scale=0.2;
+    this.player.depth=1;
+    this.anims.create({
+      key:'right',
+      frames:this.anims.generateFrameNumbers("player",{start:0,end:3}),
+      frameRate:8,
+      repeat:-1
+  });
+  this.anims.create({
+      key:'left',
+      frames:this.anims.generateFrameNumbers("player",{start:4,end:7}),
+      frameRate:8,
+      repeat:-1
+  });
+
+  this.anims.create({
+      key:'up',
+      frames:this.anims.generateFrameNumbers("player",{start:8,end:11}),
+      frameRate:8,
+      repeat:-1
+  });
+  this.anims.create({
+      key:'down',
+      frames:this.anims.generateFrameNumbers("player",{start:12,end:15}),
+      frameRate:8,
+      repeat:-1
+  });
+  this.anims.create({
+      key:'thrust',
+      frames:this.anims.generateFrameNumbers("player"),
+      frameRate:8,
+      repeat:-1
+  });
+    this.cursors = this.input.keyboard.createCursorKeys();    
+    this.player.setCollideWorldBounds(true);
+    this.physics.add.collider(player,tilesLayer);
+    tilesLayer.setCollisionBetween(0,41);
+
+    //volume off
+    this.mic_off_image =this.add.sprite(0,0,'micOff')
+    this.mic_off_image.setScale(0.1)
+    this.mic_off_image.x = 15
+    this.mic_off_image.y = 584
+    this.mic_off_image.setInteractive({useHandCursor: true})
+    this.mic_off_image.on('pointerdown',() => this.volumeButton())
+    this.mic_off_image.setVisible(false) 
+
+    //volume on
+    this.mic_on_image =this.add.sprite(0,0,'micOn')
+    this.mic_on_image.setScale(0.1)
+    this.mic_on_image.x = 15
+    this.mic_on_image.y = 584
+    this.mic_on_image.setInteractive({useHandCursor: true})
+    this.mic_on_image.on('pointerdown',() => this.volumeButton())
+    this.volume_on = true   
+    
+    this.game_music = this.sound.add('gameMusic')
+    this.game_music.play({loop:true})
+
 
 
      //Finding the far coins from the path
@@ -123,7 +192,6 @@ class Level1Scene extends Phaser.Scene {
       this.score += 5;
       console.log('your score is : ' + this.score );
     }
-
     //finding the near coins to the path
     this.pickCoinNear = function(pl, coin){
       coin.destroy();
@@ -132,19 +200,50 @@ class Level1Scene extends Phaser.Scene {
     }
 
     this.hitFinish = function (pl, finito) {
-      this.board = this.add.image(100, 100, 'board').setOrigin(0, 0);
+      
+      this.board = this.add.image(90, 100, 'board').setOrigin(0, 0);
       this.board.setScale(2.2)
-
-      this.add.text(100, 220, 'You won, your score is: ', { fontSize: '46px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
-      this.add.text(220, 300, this.score, { fontSize: '46px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
-
-      this.menu = this.add.image(220, 310, 'menu').setOrigin(0, 0);
+      
+      this.add.text(180, 200, 'You won, your score is:', { fontSize: '42px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff'});
+      this.add.text(380, 250, this.score, { fontSize: '42px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff'});
+      
+      this.menu = this.add.image(220, 300, 'menu').setOrigin(0, 0)
       this.menu.on('pointerdown',() => this.scene.switch('menuScene'))
       this.menu.setInteractive({useHandCursor: true})
 
-      this.next = this.add.image(420, 300, 'next').setOrigin(0, 0);
+      this.next = this.add.image(400, 290, 'next').setOrigin(0, 0)
       this.next.on('pointerdown',() => this.scene.switch('level2Scene'))
       this.next.setInteractive({useHandCursor: true})
+
+
+//      //Finding the far coins from the path
+//      this.pickCoinFar = function(pl, coin){
+//       coin.destroy();
+//       this.score += 5;
+//       console.log('your score is : ' + this.score );
+//     }
+
+//     //finding the near coins to the path
+//     this.pickCoinNear = function(pl, coin){
+//       coin.destroy();
+//       this.score += 1;
+//       console.log('your score is : ' + this.score );
+//     }
+
+//     this.hitFinish = function (pl, finito) {
+//       this.board = this.add.image(100, 100, 'board').setOrigin(0, 0);
+//       this.board.setScale(2.2)
+
+//       this.add.text(100, 220, 'You won, your score is: ', { fontSize: '46px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
+//       this.add.text(220, 300, this.score, { fontSize: '46px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
+
+//       this.menu = this.add.image(220, 310, 'menu').setOrigin(0, 0);
+//       this.menu.on('pointerdown',() => this.scene.switch('menuScene'))
+//       this.menu.setInteractive({useHandCursor: true})
+
+//       this.next = this.add.image(420, 300, 'next').setOrigin(0, 0);
+//       this.next.on('pointerdown',() => this.scene.switch('level2Scene'))
+//       this.next.setInteractive({useHandCursor: true})
       
       this.movable = false
     }
@@ -208,11 +307,14 @@ class Level1Scene extends Phaser.Scene {
     this.movable = true;
 
 
-    this.speed = 200;
+    //Setting The Character's speed
+    this.speed = 300;
+
 
     }
 
     update(){
+
       if (this.movable) {
         
         this.player.setVelocity(0);
@@ -223,6 +325,7 @@ class Level1Scene extends Phaser.Scene {
         else if (this.cursors.right.isDown) {
           this.player.setVelocityX(this.speed);
           this.player.anims.play('right', true);
+
         }else {
           this.player.anims.stop();
         }
@@ -238,8 +341,12 @@ class Level1Scene extends Phaser.Scene {
           else {
             this.player.anims.stop();
           }
+         else {
+          this.player.anims.stop();
+          this.player.setVelocityY(-5);
         }
-      }
+      } 
+
 
   volumeButton(){
     if(this.volume_on == true)
