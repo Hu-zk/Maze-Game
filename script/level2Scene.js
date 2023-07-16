@@ -33,6 +33,8 @@ class Level2Scene extends Phaser.Scene {
         this.load.image('board','../assets/board.png')
         this.load.image('menu','../assets/menu.png')
         this.load.image('next','../assets/next.png')
+        this.load.image('gold','../assets/gold.png')
+
 
         }
 
@@ -130,13 +132,18 @@ class Level2Scene extends Phaser.Scene {
         this.restart_icon.setInteractive({useHandCursor: true})
         this.restart_icon.on('pointerdown',() => this.restartIcon())
 
+        this.gold_image =this.add.sprite(0,0,'gold')
+        this.gold_image.setScale(0.1)
+        this.gold_image.x = 30
+        this.gold_image.y = 20
+
         //Finding the far coins from the path
         this.pickCoinFar = function(pl, coin){
             coin.destroy();
             this.score += 5;
 
             this.coinsCounter++;
-            this.coinsCounterLabel.setText('You have ' + this.coinsCounter + ' coins');
+            this.coinsCounterLabel.setText(this.coinsCounter + ' coins');
 
             console.log('your score is : ' + this.score );
         }
@@ -147,7 +154,7 @@ class Level2Scene extends Phaser.Scene {
             this.score += 1;
 
             this.coinsCounter++;
-            this.coinsCounterLabel.setText('You have ' + this.coinsCounter + ' coins');
+            this.coinsCounterLabel.setText(this.coinsCounter + ' coins');
             
             console.log('your score is : ' + this.score );
         }
@@ -235,7 +242,7 @@ class Level2Scene extends Phaser.Scene {
         //Finding the far coins from the path
 
         this.coinsCounter = 0;
-    this.coinsCounterLabel = this.add.text(20, 20, 'You Have : 0 coins', { fontSize: '14px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
+    this.coinsCounterLabel = this.add.text(50, 17, ' 0 coins', { fontSize: '14px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
 
     }
 
