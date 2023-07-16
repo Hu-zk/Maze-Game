@@ -13,23 +13,26 @@ class Level2Scene extends Phaser.Scene {
     preload(){
         console.log('level2 Scene is working')
 
-        this.load.image('background', '../assets/Forest-BG2.jfif');
+        this.load.image('background', '../assets/level2Bg.jpg');
         this.load.image('dungeon_tiles', '../assets/tilemap_packed.png');
         this.load.tilemapTiledJSON('map', '../json/maze2.json');
-
-       
+        
+        
         let player=this.load.spritesheet('player','assets/player.png',
         {
             frameWidth:126.41,
-            frameHeight:152})
-
+            frameHeight:152
+        })
+            
         this.load.audio('gameMusic','../assets/sounds/gameSound.mp3')
-    }
+        this.load.image('homeIcon', '../assets/homeIcon.png');
+        this.load.image('restartIcon', '../assets/restartIcon.png');
+
+        }
 
 
     create(data){
 
-       
         const background = this.add.image(0, 0, 'background').setOrigin(0, 0);
         background.setScale(this.game.config.width / background.width, this.game.config.height / background.height);
 
@@ -49,7 +52,7 @@ class Level2Scene extends Phaser.Scene {
 
         this.input.keyboard.enabled=true;   
         let player=this.player=this.physics.add.sprite(340,540,'player');
-        this.player.scale=0.2;
+        this.player.scale=0.17;
         this.player.depth=1;
         this.anims.create({
             key:'right',
@@ -90,18 +93,18 @@ class Level2Scene extends Phaser.Scene {
 
 
         this.mic_off_image =this.add.sprite(0,0,'micOff')
-        this.mic_off_image.setScale(0.1)
-        this.mic_off_image.x = 15
-        this.mic_off_image.y = 584
+        this.mic_off_image.setScale(0.07)
+        this.mic_off_image.x = 23
+        this.mic_off_image.y = 577
         this.mic_off_image.setInteractive({useHandCursor: true})
         this.mic_off_image.on('pointerdown',() => this.volumeButton())
         this.mic_off_image.setVisible(false)
 
 
         this.mic_on_image =this.add.sprite(0,0,'micOn')
-        this.mic_on_image.setScale(0.1)
-        this.mic_on_image.x = 15
-        this.mic_on_image.y = 584
+        this.mic_on_image.setScale(0.07)
+        this.mic_on_image.x = 23
+        this.mic_on_image.y = 577
         this.mic_on_image.setInteractive({useHandCursor: true})
         this.mic_on_image.on('pointerdown',() => this.volumeButton())
         this.volume_on = true    
@@ -109,10 +112,23 @@ class Level2Scene extends Phaser.Scene {
         this.game_music = this.sound.add('gameMusic')
         this.game_music.play({loop:true})
 
+        this.home_icon =this.add.sprite(0,0,'homeIcon')
+        this.home_icon.setScale(0.07)
+        this.home_icon.x = 780
+        this.home_icon.y = 580
+        this.home_icon.setInteractive({useHandCursor: true})
+        this.home_icon.on('pointerdown',() => this.homeIcon())
+
+        this.restart_icon =this.add.sprite(0,0,'restartIcon')
+        this.restart_icon.setScale(0.07)
+        this.restart_icon.x = 745
+        this.restart_icon.y = 580
+        this.restart_icon.setInteractive({useHandCursor: true})
+        this.restart_icon.on('pointerdown',() => this.restartIcon())
+
 
     }
 
-  
     update(){
         this.player.setVelocity(0);
         if (this.cursors.left.isDown) {
@@ -124,7 +140,7 @@ class Level2Scene extends Phaser.Scene {
             this.player.anims.play('right', true);
         }
         else if (this.cursors.up.isDown) {
-            this.player.setVelocityY(-600);
+            this.player.setVelocityY(-60);
             this.player.anims.play('up', true);
         }
         else if (this.cursors.down.isDown) {
@@ -151,6 +167,16 @@ class Level2Scene extends Phaser.Scene {
             this.mic_off_image.setVisible(false)
             this.mic_on_image.setVisible(true)
         }
+    }
+
+    restartIcon(){
+        this.scene.start('level2Scene')
+        this.game_music.stop()
+    }
+
+    homeIcon(){
+        this.scene.start('menuScene')
+        this.game_music.stop()
     }
 
 }

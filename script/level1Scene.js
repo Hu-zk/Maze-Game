@@ -18,17 +18,19 @@ class Level1Scene extends Phaser.Scene {
         this.load.image('background', '../assets/Forest-BG2.jfif');
         this.load.image('dungeon_tiles', '../assets/tilemap_packed.png');
         this.load.tilemapTiledJSON('map', '../json/tilesLayer.json');
+        this.load.image('homeIcon', '../assets/homeIcon.png');
+        this.load.image('restartIcon', '../assets/restartIcon.png');
 
 
         let player=this.load.spritesheet('player','assets/player.png',
         {
             frameWidth:126.41,
             frameHeight:152})
-        this.load.audio('gameMusic','../assets/sounds/gameSound.mp3')
-     }
 
-  create(data){
-  
+        this.load.audio('gameMusic','../assets/sounds/gameSound.mp3')
+    }
+
+    create(data){
 
     const background = this.add.image(0, 0, 'background').setOrigin(0, 0);
     background.setScale(this.game.config.width / background.width, this.game.config.height / background.height);
@@ -50,7 +52,7 @@ class Level1Scene extends Phaser.Scene {
 
     this.input.keyboard.enabled=true;   
     let player=this.player=this.physics.add.sprite(390,540,'player');
-    this.player.scale=0.2;
+    this.player.scale=0.17;
     this.player.depth=1;
     this.anims.create({
         key:'right',
@@ -64,7 +66,6 @@ class Level1Scene extends Phaser.Scene {
         frameRate:8,
         repeat:-1
     });
-
     this.anims.create({
         key:'up',
         frames:this.anims.generateFrameNumbers("player",{start:8,end:11}),
@@ -83,25 +84,40 @@ class Level1Scene extends Phaser.Scene {
         frameRate:8,
         repeat:-1
     });    
+
     this.cursors = this.input.keyboard.createCursorKeys();    
     this.player.setCollideWorldBounds(true);
     this.physics.add.collider(player,tilesLayer);
     tilesLayer.setCollisionBetween(0,41);
+    
+    this.home_icon =this.add.sprite(0,0,'homeIcon')
+    this.home_icon.setScale(0.07)
+    this.home_icon.x = 780
+    this.home_icon.y = 580
+    this.home_icon.setInteractive({useHandCursor: true})
+    this.home_icon.on('pointerdown',() => this.homeIcon())
+
+    this.restart_icon =this.add.sprite(0,0,'restartIcon')
+    this.restart_icon.setScale(0.07)
+    this.restart_icon.x = 745
+    this.restart_icon.y = 580
+    this.restart_icon.setInteractive({useHandCursor: true})
+    this.restart_icon.on('pointerdown',() => this.restartIcon())
 
     //volume off
     this.mic_off_image =this.add.sprite(0,0,'micOff')
-    this.mic_off_image.setScale(0.1)
-    this.mic_off_image.x = 15
-    this.mic_off_image.y = 584
+    this.mic_off_image.setScale(0.07)
+    this.mic_off_image.x = 23
+    this.mic_off_image.y = 577
     this.mic_off_image.setInteractive({useHandCursor: true})
     this.mic_off_image.on('pointerdown',() => this.volumeButton())
     this.mic_off_image.setVisible(false) 
 
     //volume on
     this.mic_on_image =this.add.sprite(0,0,'micOn')
-    this.mic_on_image.setScale(0.1)
-    this.mic_on_image.x = 15
-    this.mic_on_image.y = 584
+    this.mic_on_image.setScale(0.07)
+    this.mic_on_image.x = 23
+    this.mic_on_image.y = 577
     this.mic_on_image.setInteractive({useHandCursor: true})
     this.mic_on_image.on('pointerdown',() => this.volumeButton())
     this.volume_on = true   
@@ -133,7 +149,7 @@ class Level1Scene extends Phaser.Scene {
         }
     }
 
-  volumeButton(){
+    volumeButton(){
     if(this.volume_on == true)
     {
         this.game_music.stop()
@@ -148,7 +164,19 @@ class Level1Scene extends Phaser.Scene {
         this.mic_off_image.setVisible(false)
         this.mic_on_image.setVisible(true)
     }
-  }
+    }
+
+    restartIcon(){
+        this.scene.start('level1Scene')
+        this.game_music.stop()
+    }
+
+    homeIcon(){
+
+        this.scene.setVisible(false)
+        this.scene.start('menuScene')
+        this.game_music.stop()
+    }
 
 }
 
