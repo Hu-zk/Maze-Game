@@ -14,8 +14,6 @@ class Level1Scene extends Phaser.Scene {
     
     preload(){
         console.log('level1 Scene is working')
-        this.load.image('level1_scene_bg','../assets/menuBg.jpg')
-
 
         this.load.image('background', '../assets/Forest-BG2.jfif');
         this.load.image('dungeon_tiles', '../assets/tilemap_packed.png');
@@ -30,10 +28,7 @@ class Level1Scene extends Phaser.Scene {
      }
 
   create(data){
-    this.level1_scene_bg =this.add.sprite(0,0,'level1_scene_bg')
-    this.level1_scene_bg.setScale(0.75)
-    this.level1_scene_bg.x = 800/2
-    this.level1_scene_bg.y = 600/2
+  
 
     const background = this.add.image(0, 0, 'background').setOrigin(0, 0);
     background.setScale(this.game.config.width / background.width, this.game.config.height / background.height);
@@ -110,6 +105,7 @@ class Level1Scene extends Phaser.Scene {
     this.mic_on_image.setInteractive({useHandCursor: true})
     this.mic_on_image.on('pointerdown',() => this.volumeButton())
     this.volume_on = true   
+    
     this.game_music = this.sound.add('gameMusic')
     this.game_music.play({loop:true})
     }
@@ -136,7 +132,7 @@ class Level1Scene extends Phaser.Scene {
             this.player.anims.stop();
         }
     }
-    
+
   volumeButton(){
     if(this.volume_on == true)
     {

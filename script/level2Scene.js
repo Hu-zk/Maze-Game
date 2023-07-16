@@ -17,7 +17,11 @@ class Level2Scene extends Phaser.Scene {
         this.load.image('dungeon_tiles', '../assets/tilemap_packed.png');
         this.load.tilemapTiledJSON('map', '../json/maze2.json');
 
-        this.load.image('player', '../assets/Player1.png');
+       
+        let player=this.load.spritesheet('player','assets/player.png',
+        {
+            frameWidth:126.41,
+            frameHeight:152})
 
         this.load.audio('gameMusic','../assets/sounds/gameSound.mp3')
     }
@@ -25,8 +29,65 @@ class Level2Scene extends Phaser.Scene {
 
     create(data){
 
+       
         const background = this.add.image(0, 0, 'background').setOrigin(0, 0);
         background.setScale(this.game.config.width / background.width, this.game.config.height / background.height);
+
+        const map = this.make.tilemap({ key: 'map' });
+        const tileset = map.addTilesetImage('tilemap_packed', 'dungeon_tiles');
+        const Layer = map.createLayer('Tile Layer 1', tileset, 0, 0);
+        const tilesLayer= map.createLayer("tileslayer",tileset,0,0);
+
+        // Calculate the position to center the tileset
+        const centerX = (this.game.config.width - map.widthInPixels) / 2;
+        const centerY = (this.game.config.height - map.heightInPixels) / 2;
+
+        // Move the tileset layer to the center
+        Layer.setPosition(centerX, centerY);
+        tilesLayer.setPosition(centerX,centerY);
+
+
+        this.input.keyboard.enabled=true;   
+        let player=this.player=this.physics.add.sprite(340,540,'player');
+        this.player.scale=0.2;
+        this.player.depth=1;
+        this.anims.create({
+            key:'right',
+            frames:this.anims.generateFrameNumbers("player",{start:0,end:3}),
+            frameRate:8,
+            repeat:-1
+        });
+        this.anims.create({
+            key:'left',
+            frames:this.anims.generateFrameNumbers("player",{start:4,end:7}),
+            frameRate:8,
+            repeat:-1
+        });
+    
+        this.anims.create({
+            key:'up',
+            frames:this.anims.generateFrameNumbers("player",{start:8,end:11}),
+            frameRate:8,
+            repeat:-1
+        });
+        this.anims.create({
+            key:'down',
+            frames:this.anims.generateFrameNumbers("player",{start:12,end:15}),
+            frameRate:8,
+            repeat:-1
+        });
+        this.anims.create({
+            key:'thrust',
+            frames:this.anims.generateFrameNumbers("player"),
+            frameRate:8,
+            repeat:-1
+        });       
+
+        this.cursors = this.input.keyboard.createCursorKeys();    
+        this.player.setCollideWorldBounds(true);
+        this.physics.add.collider(player,tilesLayer);
+        tilesLayer.setCollisionBetween(0,41);
+
 
         this.mic_off_image =this.add.sprite(0,0,'micOff')
         this.mic_off_image.setScale(0.1)
@@ -48,88 +109,31 @@ class Level2Scene extends Phaser.Scene {
         this.game_music = this.sound.add('gameMusic')
         this.game_music.play({loop:true})
 
-        const map = this.make.tilemap({ key: 'map' });
-        const tileset = map.addTilesetImage('tilemap_packed', 'dungeon_tiles');
-        const Layer = map.createLayer('Tile Layer 1', tileset, 0, 0);
-        const tilesLayer= map.createLayer("tileslayer",tileset,0,0);
-
-        // Calculate the position to center the tileset
-        const centerX = (this.game.config.width - map.widthInPixels) / 2;
-        const centerY = (this.game.config.height - map.heightInPixels) / 2;
-
-        // Move the tileset layer to the center
-        Layer.setPosition(centerX, centerY);
-        tilesLayer.setPosition(centerX,centerY);
-            
-
-
-        // Add player and other game elements
-        const character = this.textures.get('player').getSourceImage();
-        const characterWidth = character.width;
-        const characterHeight = character.height;
-
-        const mapWidth = map.widthInPixels;
-        const mapHeight = map.heightInPixels;
-
-        const offsetX = 0; // Adjust desired offset
-        const offsetY = 0; // Adjust  desired offset
-
-        const playerX = (mapWidth - characterWidth) / 2 + offsetX;
-        const playerY = mapHeight - characterHeight + offsetY;
-
-        const player = this.physics.add.sprite(playerX, playerY, 'player');
-
-        // Set player properties
-        player.setCollideWorldBounds(true);
-
-        
-        // Enable physics for the collidable tiles
-        this.physics.add.collider(player,tilesLayer);
-        tilesLayer.setCollisionBetween(0,41);
-
-        // Set up keyboard input
-        const cursors = this.input.keyboard.createCursorKeys();
-
-        // Player movement speed
-        const speed = 200;
-
-        // Update function called every frame
-        this.update = function() {
-            // Horizontal movement
-            if (cursors.left.isDown) {
-            player.setVelocityX(-speed);
-            } else if (cursors.right.isDown) {
-            player.setVelocityX(speed);
-            } else {
-            player.setVelocityX(0);
-            }
-
-            // Vertical movement
-            if (cursors.up.isDown) {
-            player.setVelocityY(-speed);
-            } else if (cursors.down.isDown) {
-            player.setVelocityY(speed);
-            } else {
-            player.setVelocityY(0);
-            }
-
-
-            // Disable the default physics body outline (purple box)
-            player.body.debugBodyColor = 0x000000; 
-
-            // Hide the green pointer
-            player.body.debugShowDirection = false;
-
-
-
-
-            // Any logic Your code here
-        };
-        
 
     }
-    update (time,delta){
 
+  
+    update(){
+        this.player.setVelocity(0);
+        if (this.cursors.left.isDown) {
+            this.player.setVelocityX(-50);
+            this.player.anims.play('left', true);
+        } 
+        else if (this.cursors.right.isDown) {
+            this.player.setVelocityX(50);
+            this.player.anims.play('right', true);
+        }
+        else if (this.cursors.up.isDown) {
+            this.player.setVelocityY(-50);
+            this.player.anims.play('up', true);
+        }
+        else if (this.cursors.down.isDown) {
+            this.player.setVelocityY(50);
+            this.player.anims.play('down', true);
+        } 
+        else {
+            this.player.anims.stop();
+        }
     }
 
     volumeButton(){
