@@ -34,6 +34,7 @@ class Level1Scene extends Phaser.Scene {
         this.load.image('board','../assets/board.png')
         this.load.image('menu','../assets/menu.png')
         this.load.image('next','../assets/next.png')
+        this.load.image('gold','../assets/gold.png')
     }
     
     create(data){
@@ -129,12 +130,17 @@ class Level1Scene extends Phaser.Scene {
         this.game_music = this.sound.add('gameMusic')
         this.game_music.play({loop:true})
 
+        this.gold_image =this.add.sprite(0,0,'gold')
+        this.gold_image.setScale(0.1)
+        this.gold_image.x = 30
+        this.gold_image.y = 20
+
         //Finding the far coins from the path
         this.pickCoinFar = function(pl, coin){
         coin.destroy();
 
         this.coinsCounter++;
-        this.coinsCounterLabel.setText('You have ' + this.coinsCounter + ' coins');
+        this.coinsCounterLabel.setText(this.coinsCounter + ' coins');
         
         this.score += 5;
         console.log('your score is : ' + this.score );
@@ -146,7 +152,7 @@ class Level1Scene extends Phaser.Scene {
         this.score += 1;
 
         this.coinsCounter++;
-        this.coinsCounterLabel.setText('You have ' + this.coinsCounter + ' coins');
+        this.coinsCounterLabel.setText(this.coinsCounter + ' coins');
 
         console.log('your score is : ' + this.score );
         }
@@ -250,16 +256,15 @@ class Level1Scene extends Phaser.Scene {
 
 
         this.coinsCounter = 0;
-        this.coinsCounterLabel = this.add.text(20, 20, 'You Have : 0 coins', { fontSize: '14px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
-    
-    
+
          // Initialize the timer variables
          this.initialTime = 20; // Set the initial time in seconds
          this.timerText = this.add.text(780, 20, 'Time: ' + this.initialTime, { fontSize: '14px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
          this.timerText.setOrigin(1, 0);
          this.timerEvent = this.time.addEvent({ delay: 1000, callback: this.updateTimer, callbackScope: this, loop: true });
 
-    
+
+        this.coinsCounterLabel = this.add.text(50, 17, ' 0 coins', { fontSize: '14px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
     }
     
     update(){

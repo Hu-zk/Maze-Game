@@ -8,6 +8,20 @@ class TutorialScene extends Phaser.Scene {
 
     init(data){
         this.cameras.main.setBackgroundColor('#ffffff')
+        this.tutorial_title = null
+        this.tutorial_title_style = {
+            fontFamily: 'poppens',
+            fontSize: '50px',
+            fontWeight: "bold",
+            color: '#ffffff',
+            align: 'center'
+        }
+        this.tut={
+            fontFamily: 'poppens',
+            fontSize: '30px',
+            fontWeight: "lighter",
+            color: '#ffffff',
+        }
     }
 
     preload(){
@@ -18,6 +32,10 @@ class TutorialScene extends Phaser.Scene {
         this.load.image('micOff','../assets/micOff.png')
         this.load.audio('menuMusic','../assets/sounds/menuSound.mp3')
         this.load.image('textBg','../assets/textBg.png')
+
+        this.load.image('coin','../assets/coin.png')
+        this.load.image('finish','../assets/finish.jpeg')
+        this.load.image('keys','../assets/keys.png')
 
     }
 
@@ -31,7 +49,18 @@ class TutorialScene extends Phaser.Scene {
         this.title_bg = this.add.sprite(0,0,'textBg')
         this.title_bg.setScale(1.3)
         this.title_bg.x = 400
-        this.title_bg.y = 300
+        this.title_bg.y = 235
+
+
+        this.key = this.add.sprite(250,170,'keys').setScale(0.2)
+        this.coin= this.add.sprite(250,260,'coin').setScale(0.3)
+        this.finish=this.add.sprite(250,350,'finish').setScale(0.09)
+        
+
+        this.tutorial_title = this.add.text(200,80, "GAME TUTORIAL", this.tutorial_title_style)
+        this.key_tut = this.add.text(350,165, "Move the player", this.tut)
+        this.coin_tut= this.add.text(350,245, "Collect coins", this.tut)
+        this.finish_tut= this.add.text(350,335, "Reach the finish line", this.tut)
 
         this.menu_music = this.sound.add('menuMusic')
         this.menu_music.play({loop:true})
