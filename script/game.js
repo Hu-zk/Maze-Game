@@ -1,5 +1,3 @@
-
-
 import Level2Scene from "./level2Scene.js"
 import Level1Scene from "./level1Scene.js"
 import TitleScene from "./titleScene.js"

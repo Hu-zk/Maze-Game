@@ -10,9 +10,19 @@ class Level1Scene extends Phaser.Scene {
       this.cameras.main.setBackgroundColor('#ffffff')
     }
 
+<<<<<<< Updated upstream
     preload(){
       console.log('level1 Scene is working')
       this.load.image('level1_scene_bg','../assets/menuBg.jpg')
+=======
+        this.load.image('coin','../assets/coin.png')
+        this.load.image('finish','../assets/finish.jpeg')
+        this.load.image('board','../assets/board.png')
+     }
+
+  create(data){
+  
+>>>>>>> Stashed changes
 
       this.load.image('background', '../assets/Forest-BG2.jfif');
       this.load.image('dungeon_tiles', '../assets/tilemap_packed.png');
@@ -31,6 +41,16 @@ class Level1Scene extends Phaser.Scene {
       this.level1_scene_bg.x = 800/2
       this.level1_scene_bg.y = 600/2
 
+<<<<<<< Updated upstream
+=======
+    this.hitFinish = function (pl, finito) {
+      this.board = this.add.image(100, 100, 'board').setOrigin(0, 0);
+      this.board.setScale(2)
+      this.add.text(150, 200, 'You won, your score is: ' + this.score, { fontSize: '42px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff'});
+      this.menu = this.add.image(100, 100, 'board').setOrigin(0, 0);
+      this.movable = false
+    }
+>>>>>>> Stashed changes
 
       const background = this.add.image(0, 0, 'background').setOrigin(0, 0);
       background.setScale(this.game.config.width / background.width, this.game.config.height / background.height);
@@ -164,6 +184,7 @@ class Level1Scene extends Phaser.Scene {
         } else {
           player.setVelocityX(0);
         }
+<<<<<<< Updated upstream
     
         // Vertical movement
         if (cursors.up.isDown) {
@@ -183,6 +204,25 @@ class Level1Scene extends Phaser.Scene {
     
         // Any logic Your code herethis.coin1 = this.add.sprite(80, 350,'coin')
 
+=======
+        
+        if (this.cursors.up.isDown) {
+            this.player.setVelocityY(-this.speed);
+            this.player.anims.play('up', true);
+          }
+          else if (this.cursors.down.isDown) {
+            this.player.setVelocityY(this.speed);
+            this.player.anims.play('down', true);
+          } 
+          else {
+            this.player.anims.stop();
+          }
+        } else {
+          this.player.anims.stop();
+          this.player.setVelocityY(-5);
+        }
+      } 
+>>>>>>> Stashed changes
 
       //Creating and possitioning the coins
       
