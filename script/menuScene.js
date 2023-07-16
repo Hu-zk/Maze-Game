@@ -8,7 +8,6 @@ class MenuScene extends Phaser.Scene {
         this.menu_scene_title = null
         this.menu_scene_title_style = {
             fontFamily: 'poppens',
-            backgroundColor:'#7a3f0f',
             fontSize: '60px',
             fontWeight: "bold",
             color: '#ffffff',
@@ -25,9 +24,11 @@ class MenuScene extends Phaser.Scene {
         this.load.image('menuSceneBg','../assets/menuBg.jpg')
         this.load.image('startButton','../assets/startButton.jpeg')
         this.load.image('levelButton','../assets/levelButton.jpeg')
-        this.load.image('mic','../assets/mic.jpeg')
+        this.load.image('micOn','../assets/micOn.png')
+        this.load.image('micOff','../assets/micOff.png')
+        this.load.image('textBg','../assets/textBg.png')
 
-        this.load.audio('menuMusic','assets/sounds/menuSound.mp3')
+        this.load.audio('menuMusic','../assets/sounds/menuSound.mp3')
     }
 
     create(data){
@@ -36,7 +37,13 @@ class MenuScene extends Phaser.Scene {
         this.menu_scene_image.setScale(0.762)
         this.menu_scene_image.x = 800/2
         this.menu_scene_image.y = 600/2
-        this.menu_scene_title = this.add.text(450,450, "UnderGround\nMAZE", this.menu_scene_title_style)
+
+        this.title_bg = this.add.sprite(0,0,'textBg')
+        this.title_bg.setScale(0.5)
+        this.title_bg.x = 680
+        this.title_bg.y = 515
+
+        this.menu_scene_title = this.add.text(595,490, "MAZE", this.menu_scene_title_style)
 
         
         this.start_button= this.add.sprite(0,0,'startButton')
@@ -57,26 +64,51 @@ class MenuScene extends Phaser.Scene {
         this.menu_music = this.sound.add('menuMusic')
         this.menu_music.play({loop:true})
         
-        this.mic_image =this.add.sprite(0,0,'mic')
-        this.mic_image.setScale(0.1)
-        this.mic_image.x = 16
-        this.mic_image.y = 583
-        this.mic_image.setInteractive({useHandCursor: true})
+        this.mic_off_image =this.add.sprite(0,0,'micOff')
+        this.mic_off_image.setScale(0.1)
+        this.mic_off_image.x = 23
+        this.mic_off_image.y = 577
+        this.mic_off_image.setInteractive({useHandCursor: true})
+        this.mic_off_image.on('pointerdown',() => this.volumeButton())
+        this.mic_off_image.setVisible(false)
+
+
+        this.mic_on_image =this.add.sprite(0,0,'micOn')
+        this.mic_on_image.setScale(0.1)
+        this.mic_on_image.x = 23
+        this.mic_on_image.y = 577
+        this.mic_on_image.setInteractive({useHandCursor: true})
+        this.mic_on_image.on('pointerdown',() => this.volumeButton())
+        this.volume_on = true
 
     }
 
     update (time,delta){
     }
-
+    
+    volumeButton(){
+        if(this.volume_on == true)
+        {
+            this.menu_music.stop()
+            this.volume_on = false
+            this.mic_off_image.setVisible(true)
+            this.mic_on_image.setVisible(false)
+        }
+        else
+        {
+            this.menu_music.play()
+            this.volume_on = true
+            this.mic_off_image.setVisible(false)
+            this.mic_on_image.setVisible(true)
+        }
+    }
     clickStartButton(){
-        this.scene.switch('level1Scene')
+        this.menu_music.stop()
+        this.scene.start('level1Scene')
     }
     clickLevelButton(){
-        this.scene.switch('level2Scene')
-    }
-    clickmic(){
-
-
+        this.menu_music.stop()
+        this.scene.start('level2Scene')
     }
 
 
