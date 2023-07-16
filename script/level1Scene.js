@@ -13,18 +13,21 @@ class Level1Scene extends Phaser.Scene {
     }
     
     preload(){
-        console.log('level1 Scene is working')
+      console.log('level1 Scene is working')
 
-        this.load.image('background', '../assets/Forest-BG2.jfif');
-        this.load.image('dungeon_tiles', '../assets/tilemap_packed.png');
-        this.load.tilemapTiledJSON('map', '../json/tilesLayer.json');
+      this.load.image('background', '../assets/Forest-BG2.jfif');
+      this.load.image('dungeon_tiles', '../assets/tilemap_packed.png');
+      this.load.tilemapTiledJSON('map', '../json/tilesLayer.json');
+      this.load.image('homeIcon', '../assets/homeIcon.png');
+      this.load.image('restartIcon', '../assets/restartIcon.png');
 
 
-        let player=this.load.spritesheet('player','assets/player.png',
-        {
-            frameWidth:126.41,
-            frameHeight:152})
-        this.load.audio('gameMusic','../assets/sounds/gameSound.mp3')
+      let player=this.load.spritesheet('player','assets/player.png',
+      {
+          frameWidth:126.41,
+          frameHeight:152})
+
+      this.load.audio('gameMusic','../assets/sounds/gameSound.mp3')
 
         this.load.image('coin','../assets/coin.png')
         this.load.image('finish','../assets/finish.jpeg')
@@ -208,7 +211,7 @@ class Level1Scene extends Phaser.Scene {
     this.movable = true;
 
     //Setting The Character's speed
-    this.speed = 100;
+    this.speed = 300;
 
     }
 

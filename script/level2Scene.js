@@ -24,6 +24,12 @@ class Level2Scene extends Phaser.Scene {
             frameHeight:152})
 
         this.load.audio('gameMusic','../assets/sounds/gameSound.mp3')
+
+        this.load.image('coin','../assets/coin.png')
+        this.load.image('finish','../assets/finish.jpeg')
+        this.load.image('board','../assets/board.png')
+        this.load.image('menu','../assets/menu.png')
+        this.load.image('next','../assets/next.png')
     }
 
 
@@ -110,11 +116,101 @@ class Level2Scene extends Phaser.Scene {
         this.game_music.play({loop:true})
 
 
-        //Setting the character's speed
-        this.speed = 100;
+        this.pickCoinFar = function(pl, coin){
+            coin.destroy();
+            this.score += 5;
+            console.log('your score is : ' + this.score );
+          }
+          //finding the near coins to the path
+          this.pickCoinNear = function(pl, coin){
+            coin.destroy();
+            this.score += 1;
+            console.log('your score is : ' + this.score );
+          }
+      
+          this.hitFinish = function (pl, finito) {
+            
+            this.board = this.add.image(90, 100, 'board').setOrigin(0, 0);
+            this.board.setScale(2.2)
+            
+            this.add.text(180, 200, 'You won, your score is:', { fontSize: '42px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff'});
+            this.add.text(380, 250, this.score, { fontSize: '42px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff'});
+            
+            this.menu = this.add.image(220, 300, 'menu').setOrigin(0, 0)
+            this.menu.on('pointerdown',() => this.scene.switch('menuScene'))
+            this.menu.setInteractive({useHandCursor: true})
+      
+            this.next = this.add.image(400, 290, 'next').setOrigin(0, 0)
+            this.next.on('pointerdown',() => this.scene.switch('level2Scene'))
+            this.next.setInteractive({useHandCursor: true})
+      
+            this.movable = false
+          }
+
+         //Creating and Positioning the coins
+    this.coin1 = this.physics.add.sprite(80, 350,'coin')
+    this.coin2 = this.physics.add.sprite(700, 500,'coin')
+    this.coin3 = this.physics.add.sprite(80, 110,'coin')
+    this.coin4 = this.physics.add.sprite(540, 350,'coin')
+    this.coin5 = this.physics.add.sprite( 650, 170,'coin')
+    this.coin6 = this.physics.add.sprite(400, 450,'coin')
+    this.coin7 = this.physics.add.sprite(250, 200,'coin')
+    this.coin8 = this.physics.add.sprite(360, 330,'coin')
+
+    //Creating and Positioning the Finish point
+
+    this.finish = this.physics.add.sprite(800, 155,'finish')
+    this.finish.setScale(0.045, 0.05)
+
+    //Giving the coins the right size
+    this.coin1.setScale(0.12)
+    this.coin2.setScale(0.12)
+    this.coin3.setScale(0.12)
+    this.coin4.setScale(0.12)
+    this.coin5.setScale(0.12)
+    this.coin6.setScale(0.12)
+    this.coin7.setScale(0.12)
+    this.coin8.setScale(0.12)
+
+    //Set coins to be Immovable
+
+    this.coin1.setImmovable(true)
+    this.coin2.setImmovable(true)
+    this.coin3.setImmovable(true)
+    this.coin4.setImmovable(true)
+    this.coin5.setImmovable(true)
+    this.coin6.setImmovable(true)
+    this.coin7.setImmovable(true)
+    this.coin8.setImmovable(true)
+
+    this.finish.setImmovable(true)
 
 
-        this.movable = true;
+    this.score = 0;
+
+    //Assigning the overlap coins action
+    this.physics.add.overlap(this.player, this.coin1, this.pickCoinFar, null, this);
+    this.physics.add.overlap(this.player, this.coin2, this.pickCoinFar, null, this);
+    this.physics.add.overlap(this.player, this.coin3, this.pickCoinFar, null, this);
+    this.physics.add.overlap(this.player, this.coin4, this.pickCoinFar, null, this);
+    this.physics.add.overlap(this.player, this.coin5, this.pickCoinNear, null, this);
+    this.physics.add.overlap(this.player, this.coin6, this.pickCoinNear, null, this);
+    this.physics.add.overlap(this.player, this.coin7, this.pickCoinNear, null, this);
+    this.physics.add.overlap(this.player, this.coin8, this.pickCoinNear, null, this);
+
+
+    //Assigning the overlap coins action
+    this.physics.add.overlap(this.player, this.finish, this.hitFinish, null, this);
+
+
+    this.movable = true;
+
+    //Setting The Character's speed
+    this.speed = 300;
+
+    //Finding the far coins from the path
+  
+
     }
 
   
@@ -149,7 +245,6 @@ class Level2Scene extends Phaser.Scene {
             }
           } 
     
-
     volumeButton(){
         if(this.volume_on == true)
         {

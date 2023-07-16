@@ -72,7 +72,7 @@ class MenuScene extends Phaser.Scene {
         this.scene.switch('level1Scene')
     }
     clickLevelButton(){
-        this.scene.switch('level1Scene')
+        this.scene.switch('level2Scene')
     }
     clickmic(){
 
