@@ -30,8 +30,8 @@ class Level1Scene extends Phaser.Scene {
         this.level1_scene_bg.y = 600/2
 
 
-       const background = this.add.image(0, 0, 'background').setOrigin(0, 0);
-            background.setScale(game.config.width / background.width, game.config.height / background.height);
+            const background = this.add.image(0, 0, 'background').setOrigin(0, 0);
+            background.setScale(this.game.config.width / background.width, this.game.config.height / background.height);
 
             const map = this.make.tilemap({ key: 'map' });
             const tileset = map.addTilesetImage('tilemap_packed', 'dungeon_tiles');
@@ -39,8 +39,8 @@ class Level1Scene extends Phaser.Scene {
             const tilesLayer= map.createLayer("tileslayer",tileset,0,0);
 
             // Calculate the position to center the tileset
-            const centerX = (game.config.width - map.widthInPixels) / 2;
-            const centerY = (game.config.height - map.heightInPixels) / 2;
+            const centerX = (this.game.config.width - map.widthInPixels) / 2;
+            const centerY = (this.game.config.height - map.heightInPixels) / 2;
 
             // Move the tileset layer to the center
                 Layer.setPosition(centerX, centerY);
@@ -56,7 +56,7 @@ class Level1Scene extends Phaser.Scene {
   const mapWidth = map.widthInPixels;
   const mapHeight = map.heightInPixels;
 
-  const offsetX = 60; // Adjust desired offset
+  const offsetX = 0; // Adjust desired offset
   const offsetY = 0; // Adjust  desired offset
 
   const playerX = (mapWidth - characterWidth) / 2 + offsetX;
