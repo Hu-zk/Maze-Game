@@ -2,19 +2,30 @@
 
 class Level1Scene extends Phaser.Scene {
 
+
     constructor(){
-      super({key: 'level1Scene'})
+        super({key: 'level1Scene'})
     }
+    
 
     init(data){
-      this.cameras.main.setBackgroundColor('#ffffff')
+        this.cameras.main.setBackgroundColor('#ffffff')
     }
-
-<<<<<<< Updated upstream
+    
     preload(){
-      console.log('level1 Scene is working')
-      this.load.image('level1_scene_bg','../assets/menuBg.jpg')
-=======
+        console.log('level1 Scene is working')
+
+        this.load.image('background', '../assets/Forest-BG2.jfif');
+        this.load.image('dungeon_tiles', '../assets/tilemap_packed.png');
+        this.load.tilemapTiledJSON('map', '../json/tilesLayer.json');
+
+
+        let player=this.load.spritesheet('player','assets/player.png',
+        {
+            frameWidth:126.41,
+            frameHeight:152})
+        this.load.audio('gameMusic','../assets/sounds/gameSound.mp3')
+
         this.load.image('coin','../assets/coin.png')
         this.load.image('finish','../assets/finish.jpeg')
         this.load.image('board','../assets/board.png')
@@ -22,189 +33,186 @@ class Level1Scene extends Phaser.Scene {
 
   create(data){
   
->>>>>>> Stashed changes
 
-      this.load.image('background', '../assets/Forest-BG2.jfif');
-      this.load.image('dungeon_tiles', '../assets/tilemap_packed.png');
-      this.load.tilemapTiledJSON('map', '../json/tilesLayer.json');
+    const background = this.add.image(0, 0, 'background').setOrigin(0, 0);
+    background.setScale(this.game.config.width / background.width, this.game.config.height / background.height);
 
 
-      this.load.image('player', '../assets/Player1.png');
-      this.load.image('coin','../assets/coin-box.png')
-      this.load.image('finish','../assets/finish.jpeg')
 
+    const map = this.make.tilemap({ key: 'map' });
+    const tileset = map.addTilesetImage('tilemap_packed', 'dungeon_tiles');
+    const Layer = map.createLayer('Tile Layer 1', tileset, 0, 0);
+    const tilesLayer= map.createLayer("tileslayer",tileset,0,0);
+
+    // Calculate the position to center the tileset
+    const centerX = (this.game.config.width - map.widthInPixels) / 2;
+    const centerY = (this.game.config.height - map.heightInPixels) / 2;
+
+    // Move the tileset layer to the center
+    Layer.setPosition(centerX, centerY);
+    tilesLayer.setPosition(centerX,centerY);
+
+    this.input.keyboard.enabled=true;   
+    let player= this.player = this.physics.add.sprite(390,540,'player');
+    this.player.scale=0.2;
+    this.player.depth=1;
+    this.anims.create({
+        key:'right',
+        frames:this.anims.generateFrameNumbers("player",{start:0,end:3}),
+        frameRate:8,
+        repeat:-1
+    });
+    this.anims.create({
+        key:'left',
+        frames:this.anims.generateFrameNumbers("player",{start:4,end:7}),
+        frameRate:8,
+        repeat:-1
+    });
+
+    this.anims.create({
+        key:'up',
+        frames:this.anims.generateFrameNumbers("player",{start:8,end:11}),
+        frameRate:8,
+        repeat:-1
+    });
+    this.anims.create({
+        key:'down',
+        frames:this.anims.generateFrameNumbers("player",{start:12,end:15}),
+        frameRate:8,
+        repeat:-1
+    });
+    this.anims.create({
+        key:'thrust',
+        frames:this.anims.generateFrameNumbers("player"),
+        frameRate:8,
+        repeat:-1
+    });    
+    this.cursors = this.input.keyboard.createCursorKeys();    
+    this.player.setCollideWorldBounds(true);
+    this.physics.add.collider(player,tilesLayer);
+    tilesLayer.setCollisionBetween(0,41);
+
+    //volume off
+    this.mic_off_image =this.add.sprite(0,0,'micOff')
+    this.mic_off_image.setScale(0.1)
+    this.mic_off_image.x = 15
+    this.mic_off_image.y = 584
+    this.mic_off_image.setInteractive({useHandCursor: true})
+    this.mic_off_image.on('pointerdown',() => this.volumeButton())
+    this.mic_off_image.setVisible(false) 
+
+    //volume on
+    this.mic_on_image =this.add.sprite(0,0,'micOn')
+    this.mic_on_image.setScale(0.1)
+    this.mic_on_image.x = 15
+    this.mic_on_image.y = 584
+    this.mic_on_image.setInteractive({useHandCursor: true})
+    this.mic_on_image.on('pointerdown',() => this.volumeButton())
+    this.volume_on = true   
+    
+    this.game_music = this.sound.add('gameMusic')
+    this.game_music.play({loop:true})
+
+
+
+     //Finding the far coins from the path
+     this.pickCoinFar = function(pl, coin){
+      coin.destroy();
+      this.score += 5;
+      console.log('your score is : ' + this.score );
     }
 
-    create(data){
-      this.level1_scene_bg =this.add.sprite(0,0,'level1_scene_bg')
-      this.level1_scene_bg.setScale(0.75)
-      this.level1_scene_bg.x = 800/2
-      this.level1_scene_bg.y = 600/2
+    //finding the near coins to the path
+    this.pickCoinNear = function(pl, coin){
+      coin.destroy();
+      this.score += 1;
+      console.log('your score is : ' + this.score );
+    }
 
-<<<<<<< Updated upstream
-=======
     this.hitFinish = function (pl, finito) {
-      this.board = this.add.image(100, 100, 'board').setOrigin(0, 0);
-      this.board.setScale(2)
-      this.add.text(150, 200, 'You won, your score is: ' + this.score, { fontSize: '42px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff'});
-      this.menu = this.add.image(100, 100, 'board').setOrigin(0, 0);
+      this.board = this.add.image(90, 100, 'board').setOrigin(0, 0);
+      this.board.setScale(2.2)
+      this.add.text(180, 200, 'You won, your score is: ' + this.score, { fontSize: '42px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff'});
       this.movable = false
     }
->>>>>>> Stashed changes
 
-      const background = this.add.image(0, 0, 'background').setOrigin(0, 0);
-      background.setScale(this.game.config.width / background.width, this.game.config.height / background.height);
+    //Creating and Positioning the coins
+    this.coin1 = this.physics.add.sprite(80, 350,'coin')
+    this.coin2 = this.physics.add.sprite(700, 500,'coin')
+    this.coin3 = this.physics.add.sprite(80, 90,'coin')
+    this.coin4 = this.physics.add.sprite(540, 350,'coin')
+    this.coin5 = this.physics.add.sprite( 650, 190,'coin')
+    this.coin6 = this.physics.add.sprite(400, 450,'coin')
+    this.coin7 = this.physics.add.sprite(250, 200,'coin')
+    this.coin8 = this.physics.add.sprite(350, 330,'coin')
 
-      const map = this.make.tilemap({ key: 'map' });
-      const tileset = map.addTilesetImage('tilemap_packed', 'dungeon_tiles');
-      const Layer = map.createLayer('Tile Layer 1', tileset, 0, 0);
-      const tilesLayer= map.createLayer("tileslayer",tileset,0,0);
+    //Creating and Positioning the Finish point
 
-      // Calculate the position to center the tileset
-      const centerX = (this.game.config.width - map.widthInPixels) / 2;
-      const centerY = (this.game.config.height - map.heightInPixels) / 2;
+    this.finish = this.physics.add.sprite(625, 60,'finish')
+    this.finish.setScale(0.045, 0.05)
 
-      // Move the tileset layer to the center
-      Layer.setPosition(centerX, centerY);
-      tilesLayer.setPosition(centerX,centerY);
+    //Giving the coins the right size
+    this.coin1.setScale(0.12)
+    this.coin2.setScale(0.12)
+    this.coin3.setScale(0.12)
+    this.coin4.setScale(0.12)
+    this.coin5.setScale(0.12)
+    this.coin6.setScale(0.12)
+    this.coin7.setScale(0.12)
+    this.coin8.setScale(0.12)
 
+    //Set coins to be Immovable
 
-      // Add player and other game elements
-      const character = this.textures.get('player').getSourceImage();
-      const characterWidth = character.width;
-      const characterHeight = character.height;
+    this.coin1.setImmovable(true)
+    this.coin2.setImmovable(true)
+    this.coin3.setImmovable(true)
+    this.coin4.setImmovable(true)
+    this.coin5.setImmovable(true)
+    this.coin6.setImmovable(true)
+    this.coin7.setImmovable(true)
+    this.coin8.setImmovable(true)
 
-      const mapWidth = map.widthInPixels;
-      const mapHeight = map.heightInPixels;
-
-      const offsetX = 0; // Adjust desired offset
-      const offsetY = 0; // Adjust  desired offset
-
-      const playerX = (mapWidth - characterWidth) / 2 + offsetX;
-      const playerY = mapHeight - characterHeight + offsetY;
-
-      const player = this.physics.add.sprite(playerX, playerY, 'player');
-
-      // Set player properties
-      player.setCollideWorldBounds(true);
-
-      
-      // Enable physics for the collidable tiles
-      this.physics.add.collider(player,tilesLayer);
-      tilesLayer.setCollisionBetween(0,41);
-
-      // Set up keyboard input
-      const cursors = this.input.keyboard.createCursorKeys();
-
-      // Player movement speed
-      const speed = 200;
+    this.finish.setImmovable(true)
 
 
-      //Finding the far coins from the path
-      this.pickCoinFar = function(pl, coin){
-        coin.destroy();
-        this.score += 5;
-        console.log('your score is : ' + this.score );
-      }
+    this.score = 0;
 
-      //finding the near coins to the path
-      this.pickCoinNear = function(pl, coin){
-        coin.destroy();
-        this.score += 1;
-        console.log('your score is : ' + this.score );
-      }
-
-      this.hitFinish = function (pl, finito) {
-        this.add.text(200, 200, 'Hello World', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', Color: '#ff0000' });
-      }
-      
-      //Creating and Positioning the coins
-      this.coin1 = this.physics.add.sprite(80, 350,'coin')
-      this.coin2 = this.physics.add.sprite(700, 500,'coin')
-      this.coin3 = this.physics.add.sprite(80, 90,'coin')
-      this.coin4 = this.physics.add.sprite(540, 350,'coin')
-      this.coin5 = this.physics.add.sprite( 650, 190,'coin')
-      this.coin6 = this.physics.add.sprite(400, 450,'coin')
-      this.coin7 = this.physics.add.sprite(250, 200,'coin')
-      this.coin8 = this.physics.add.sprite(350, 330,'coin')
-
-      //Creating and Positioning the Finish point
-
-      this.finish = this.physics.add.sprite(625, 60,'finish')
-      this.finish.setScale(0.045, 0.05)
+    //Assigning the overlap coins action
+    this.physics.add.overlap(this.player, this.coin1, this.pickCoinFar, null, this);
+    this.physics.add.overlap(this.player, this.coin2, this.pickCoinFar, null, this);
+    this.physics.add.overlap(this.player, this.coin3, this.pickCoinFar, null, this);
+    this.physics.add.overlap(this.player, this.coin4, this.pickCoinFar, null, this);
+    this.physics.add.overlap(this.player, this.coin5, this.pickCoinNear, null, this);
+    this.physics.add.overlap(this.player, this.coin6, this.pickCoinNear, null, this);
+    this.physics.add.overlap(this.player, this.coin7, this.pickCoinNear, null, this);
+    this.physics.add.overlap(this.player, this.coin8, this.pickCoinNear, null, this);
 
 
-
-      //Giving the coins the right size
-      this.coin1.setScale(0.15)
-      this.coin2.setScale(0.15)
-      this.coin3.setScale(0.15)
-      this.coin4.setScale(0.15)
-      this.coin5.setScale(0.15)
-      this.coin6.setScale(0.15)
-      this.coin7.setScale(0.15)
-      this.coin8.setScale(0.15)
-
-      //Set coins to be Immovable
-
-      this.coin1.setImmovable(true)
-      this.coin2.setImmovable(true)
-      this.coin3.setImmovable(true)
-      this.coin4.setImmovable(true)
-      this.coin5.setImmovable(true)
-      this.coin6.setImmovable(true)
-      this.coin7.setImmovable(true)
-      this.coin8.setImmovable(true)
-
-      this.finish.setImmovable(true)
+    //Assigning the overlap coins action
+    this.physics.add.overlap(this.player, this.finish, this.hitFinish, null, this);
 
 
-      this.score = 0;
-
-      //Assigning the overlap action
-      this.physics.add.overlap(player, this.coin1, this.pickCoinFar, null, this);
-      this.physics.add.overlap(player, this.coin2, this.pickCoinFar, null, this);
-      this.physics.add.overlap(player, this.coin3, this.pickCoinFar, null, this);
-      this.physics.add.overlap(player, this.coin4, this.pickCoinFar, null, this);
-      this.physics.add.overlap(player, this.coin5, this.pickCoinNear, null, this);
-      this.physics.add.overlap(player, this.coin6, this.pickCoinNear, null, this);
-      this.physics.add.overlap(player, this.coin7, this.pickCoinNear, null, this);
-      this.physics.add.overlap(player, this.coin8, this.pickCoinNear, null, this);
+    this.movable = true;
 
 
-      
-      
+    this.speed = 200;
 
-      this.update = function() {
-        // Horizontal movement
-        if (cursors.left.isDown) {
-          player.setVelocityX(-speed);
-        } else if (cursors.right.isDown) {
-          player.setVelocityX(speed);
-        } else {
-          player.setVelocityX(0);
+    }
+
+    update(){
+      if (this.movable) {
+        
+        this.player.setVelocity(0);
+        if (this.cursors.left.isDown) {
+          this.player.setVelocityX(-this.speed);
+          this.player.anims.play('left', true);
+        } 
+        else if (this.cursors.right.isDown) {
+          this.player.setVelocityX(this.speed);
+          this.player.anims.play('right', true);
+        }else {
+          this.player.anims.stop();
         }
-<<<<<<< Updated upstream
-    
-        // Vertical movement
-        if (cursors.up.isDown) {
-          player.setVelocityY(-speed);
-        } else if (cursors.down.isDown) {
-          player.setVelocityY(speed);
-        } else {
-          player.setVelocityY(0);
-        }
-    
-    
-        // Disable the default physics body outline (purple box)
-        player.body.debugBodyColor = 0x000000; 
-    
-         // Hide the green pointer
-        player.body.debugShowDirection = false;
-    
-        // Any logic Your code herethis.coin1 = this.add.sprite(80, 350,'coin')
-
-=======
         
         if (this.cursors.up.isDown) {
             this.player.setVelocityY(-this.speed);
@@ -222,18 +230,24 @@ class Level1Scene extends Phaser.Scene {
           this.player.setVelocityY(-5);
         }
       } 
->>>>>>> Stashed changes
 
-      //Creating and possitioning the coins
-      
-
-      };
+  volumeButton(){
+    if(this.volume_on == true)
+    {
+        this.game_music.stop()
+        this.volume_on = false
+        this.mic_off_image.setVisible(true)
+        this.mic_on_image.setVisible(false)
     }
-    update (time,delta){
-  
+    else
+    {
+        this.game_music.play()
+        this.volume_on = true
+        this.mic_off_image.setVisible(false)
+        this.mic_on_image.setVisible(true)
     }
+  }
 
 }
-
 
 export default Level1Scene
