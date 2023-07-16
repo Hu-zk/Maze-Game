@@ -13,6 +13,7 @@ class Level2Scene extends Phaser.Scene {
     preload(){
         console.log('level2 Scene is working')
 
+
         this.load.image('background', '../assets/level2Bg.jpg');
         this.load.image('dungeon_tiles', '../assets/tilemap_packed.png');
         this.load.tilemapTiledJSON('map', '../json/maze2.json');
@@ -28,7 +29,7 @@ class Level2Scene extends Phaser.Scene {
         this.load.image('homeIcon', '../assets/homeIcon.png');
         this.load.image('restartIcon', '../assets/restartIcon.png');
 
-        }
+    }
 
 
     create(data){
@@ -52,7 +53,7 @@ class Level2Scene extends Phaser.Scene {
 
         this.input.keyboard.enabled=true;   
         let player=this.player=this.physics.add.sprite(340,540,'player');
-        this.player.scale=0.17;
+        this.player.scale=0.2;
         this.player.depth=1;
         this.anims.create({
             key:'right',
@@ -91,7 +92,7 @@ class Level2Scene extends Phaser.Scene {
         this.physics.add.collider(player,tilesLayer);
         tilesLayer.setCollisionBetween(0,41);
 
-
+        
         this.mic_off_image =this.add.sprite(0,0,'micOff')
         this.mic_off_image.setScale(0.07)
         this.mic_off_image.x = 23
@@ -127,47 +128,44 @@ class Level2Scene extends Phaser.Scene {
         this.restart_icon.on('pointerdown',() => this.restartIcon())
 
 
-    }
 
+        //Setting the character's speed
+        this.speed = 100;
+
+
+        this.movable = true;
+    }
     update(){
-        this.player.setVelocity(0);
-        if (this.cursors.left.isDown) {
-            this.player.setVelocityX(-60);
-            this.player.anims.play('left', true);
-        } 
-        else if (this.cursors.right.isDown) {
-            this.player.setVelocityX(60);
-            this.player.anims.play('right', true);
-        }
-        else if (this.cursors.up.isDown) {
-            this.player.setVelocityY(-60);
-            this.player.anims.play('up', true);
-        }
-        else if (this.cursors.down.isDown) {
-            this.player.setVelocityY(60);
-            this.player.anims.play('down', true);
-        } 
-        else {
-            this.player.anims.stop();
-        }
-    }
+        if (this.movable) { 
+            this.player.setVelocity(0);
+            if (this.cursors.left.isDown) {
+              this.player.setVelocityX(-this.speed);
+              this.player.anims.play('left', true);
+            } 
+            else if (this.cursors.right.isDown) {
+              this.player.setVelocityX(this.speed);
+              this.player.anims.play('right', true);
+            } else {
+              this.player.anims.stop();
+            }
+            
+            if (this.cursors.up.isDown) {
+                this.player.setVelocityY(-this.speed);
+                this.player.anims.play('up', true);
+              }
+              else if (this.cursors.down.isDown) {
+                this.player.setVelocityY(this.speed);
+                this.player.anims.play('down', true);
+              } 
+              else {
+                this.player.anims.stop();
+              }
+            } else {
+              this.player.anims.stop();
+              this.player.setVelocityY(-5);
+            }
+    } 
 
-    volumeButton(){
-        if(this.volume_on == true)
-        {
-            this.game_music.stop()
-            this.volume_on = false
-            this.mic_off_image.setVisible(true)
-            this.mic_on_image.setVisible(false)
-        }
-        else
-        {
-            this.game_music.play()
-            this.volume_on = true
-            this.mic_off_image.setVisible(false)
-            this.mic_on_image.setVisible(true)
-        }
-    }
 
     restartIcon(){
         this.scene.start('level2Scene')
