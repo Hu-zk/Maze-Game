@@ -151,33 +151,40 @@ class Level1Scene extends Phaser.Scene {
         console.log('your score is : ' + this.score );
         }
 
-        this.hitFinish = function (pl, finito) {
-            this.board = this.add.image(90, 100, 'board').setOrigin(0, 0);
-            this.board.setScale(2.2)
+       this.hitFinish = function (pl, finito) {
+    if (this.coinsCounter >= 3 && this.initialTime > 0) {
+        this.board = this.add.image(90, 100, 'board').setOrigin(0, 0);
+        this.board.setScale(2.2);
 
-            this.add.text(180, 220, 'You won, your score is: ', { margin:'10',fontSize: '46px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
-            this.add.text(380, 250, this.score, { fontSize: '46px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
+        this.add.text(180, 220, 'You won, your score is:', { margin:'10', fontSize: '46px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
+        this.add.text(380, 250, this.score, { fontSize: '46px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
 
-            this.menu = this.add.image(220, 350, 'menu').setOrigin(0, 0);
-            this.menu.setInteractive({useHandCursor: true})
-            this.menu.on('pointerdown',() => 
-            {
-                this.scene.switch('menuScene')
-                this.game_music.stop()
-                
-            })
+        this.menu = this.add.image(220, 350, 'menu').setOrigin(0, 0);
+        this.menu.setInteractive({ useHandCursor: true });
+        this.menu.on('pointerdown', () => {
+            this.scene.switch('menuScene');
+            this.game_music.stop();
+        });
 
-            this.next = this.add.image(400, 340, 'next').setOrigin(0, 0);
-            this.next.setInteractive({useHandCursor: true})
-            this.next.on('pointerdown',() => 
-            {
-                this.scene.switch('level2Scene')
-                this.game_music.stop()
-                
-            })
+        this.next = this.add.image(400, 340, 'next').setOrigin(0, 0);
+        this.next.setInteractive({ useHandCursor: true });
+        this.next.on('pointerdown', () => {
+            this.scene.switch('level2Scene');
+            this.game_music.stop();
+        });
 
-            this.movable = false
+        this.movable = false;
+    } else {
+        // Handle the case when the player does not meet the win conditions
+        if (this.coinsCounter < 3) {
+            console.log("You need at least 3 coins to win!");
         }
+        if (this.initialTime <= 0) {
+            console.log("Time's up! You lost!");
+        }
+    }
+};
+
         
         //Creating and Positioning the coins
         this.coin1 = this.physics.add.sprite(80, 350,'coin')
@@ -244,6 +251,15 @@ class Level1Scene extends Phaser.Scene {
 
         this.coinsCounter = 0;
         this.coinsCounterLabel = this.add.text(20, 20, 'You Have : 0 coins', { fontSize: '14px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
+    
+    
+         // Initialize the timer variables
+         this.initialTime = 20; // Set the initial time in seconds
+         this.timerText = this.add.text(780, 20, 'Time: ' + this.initialTime, { fontSize: '14px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
+         this.timerText.setOrigin(1, 0);
+         this.timerEvent = this.time.addEvent({ delay: 1000, callback: this.updateTimer, callbackScope: this, loop: true });
+
+    
     }
     
     update(){
@@ -316,6 +332,25 @@ class Level1Scene extends Phaser.Scene {
         this.scene.start('menuScene')
         this.game_music.stop()
     }
+
+   
+    updateTimer() {
+        this.initialTime--;
+
+    if (this.initialTime < 0 || (this.initialTime === 0 && this.coinsCounter < 3)) {
+        // Time's up or player ran out of time without enough coins, perform loss logic here
+        this.timerEvent.remove();
+        this.gameOver();
+    } else {
+        this.timerText.setText('Time: ' + this.initialTime);
+    }
+}
+
+
+
+
+
+
 
     }
 
