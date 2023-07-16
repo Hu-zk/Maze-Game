@@ -99,7 +99,7 @@ section #text{
     padding-right: 10%;
 }
 
-.footer{
+/* .footer{
     margin-top: 0px;
     padding-top: 0px;
     display: flex;
@@ -111,7 +111,7 @@ section #text{
     color: #cfb8aa;
     font-weight: 700;
     
-}
+} */
 
 canvas {
     display: block;
@@ -122,5 +122,61 @@ canvas {
     transform: translate(-50%, -25%);
     max-width: 100%;
     max-height: 50vw;
+
   }
 
+
+
+  /* _________________________________________________________ */
+
+footer{
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #9b6e52;
+    height: auto;
+    width: 100vw;
+    border-top:  solid rgb(207, 184, 170);
+    padding-top: 10px;
+    color: #2d1f01;
+}
+.footer-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+.footer-content h3{
+    font-size: 2.1rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    line-height: 3rem;
+}
+.footer-content p{
+    max-width: 200px;
+    line-height: 28px;
+    font-size: 14px;
+    color: #cacdd2;
+}
+
+.footer-bottom{
+    background: #2d1f01;
+    color: #9b6e52;
+
+    width: 100vw;
+    padding: 20px;
+padding-bottom: 40px;
+    text-align: center;
+}
+.footer-bottom p{
+float: left;
+    font-size: 14px;
+    word-spacing: 2px;
+    text-transform: capitalize;
+}
+ .footer-bottom p a{
+  color:#44bae8;
+  font-size: 16px;
+  text-decoration: none;
+}
