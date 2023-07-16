@@ -14,10 +14,11 @@ const config = {
     type: Phaser.AuTO,
     width:800,
     height: 600,
+    scene:[TitleScene,MenuScene,Level1Scene,Level2Scene],
     physics:{
         default: 'arcade',
         arcade: {
-            debug: false
+            debug: true
         }
     },
 

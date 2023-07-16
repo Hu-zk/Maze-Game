@@ -8,7 +8,6 @@ class MenuScene extends Phaser.Scene {
         this.menu_scene_title = null
         this.menu_scene_title_style = {
             fontFamily: 'poppens',
-            backgroundColor:'#7a3f0f',
             fontSize: '60px',
             fontWeight: "bold",
             color: '#ffffff',
@@ -25,8 +24,9 @@ class MenuScene extends Phaser.Scene {
         this.load.image('menuSceneBg','../assets/menuBg.jpg')
         this.load.image('startButton','../assets/startButton.jpeg')
         this.load.image('levelButton','../assets/levelButton.jpeg')
-        this.load.image('micOn','../assets/micOn.jpeg')
-        this.load.image('micOff','../assets/micOff.jpeg')
+        this.load.image('micOn','../assets/micOn.png')
+        this.load.image('micOff','../assets/micOff.png')
+        this.load.image('textBg','../assets/textBg.png')
 
         this.load.audio('menuMusic','../assets/sounds/menuSound.mp3')
     }
@@ -37,7 +37,13 @@ class MenuScene extends Phaser.Scene {
         this.menu_scene_image.setScale(0.762)
         this.menu_scene_image.x = 800/2
         this.menu_scene_image.y = 600/2
-        this.menu_scene_title = this.add.text(450,450, "UnderGround\nMAZE", this.menu_scene_title_style)
+
+        this.title_bg = this.add.sprite(0,0,'textBg')
+        this.title_bg.setScale(0.5)
+        this.title_bg.x = 680
+        this.title_bg.y = 515
+
+        this.menu_scene_title = this.add.text(595,490, "MAZE", this.menu_scene_title_style)
 
         
         this.start_button= this.add.sprite(0,0,'startButton')
@@ -60,8 +66,8 @@ class MenuScene extends Phaser.Scene {
         
         this.mic_off_image =this.add.sprite(0,0,'micOff')
         this.mic_off_image.setScale(0.1)
-        this.mic_off_image.x = 15
-        this.mic_off_image.y = 584
+        this.mic_off_image.x = 23
+        this.mic_off_image.y = 577
         this.mic_off_image.setInteractive({useHandCursor: true})
         this.mic_off_image.on('pointerdown',() => this.volumeButton())
         this.mic_off_image.setVisible(false)
@@ -69,8 +75,8 @@ class MenuScene extends Phaser.Scene {
 
         this.mic_on_image =this.add.sprite(0,0,'micOn')
         this.mic_on_image.setScale(0.1)
-        this.mic_on_image.x = 15
-        this.mic_on_image.y = 584
+        this.mic_on_image.x = 23
+        this.mic_on_image.y = 577
         this.mic_on_image.setInteractive({useHandCursor: true})
         this.mic_on_image.on('pointerdown',() => this.volumeButton())
         this.volume_on = true
