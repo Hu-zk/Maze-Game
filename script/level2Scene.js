@@ -225,7 +225,9 @@ class Level2Scene extends Phaser.Scene {
         this.speed = 300;
 
         //Finding the far coins from the path
-    
+
+        this.coinsCounter = 0;
+    this.coinsCounterLabel = this.add.text(20, 20, 'You Have : 0 coins', { fontSize: '14px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
 
     }
 
