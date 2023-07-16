@@ -4,12 +4,14 @@
 margin:0;
 padding: 0;
 box-sizing: border-box;
+
 }
 
 body{
     overflow-x: hidden;
     background: #fff;
     min-height: 100vh;
+
 }
 
 section{
@@ -87,7 +89,7 @@ section #text{
     background-color: #2d1f01;
     font-size: 2em ;
     width:100%;
-    height: 145vh;
+    height: 157vh;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -99,33 +101,18 @@ section #text{
     padding-right: 10%;
 }
 
-/* .footer{
-    margin-top: 0px;
-    padding-top: 0px;
-    display: flex;
-    justify-content: space-between;
-
-    padding-left: 10%;
-    padding-right: 10%;
-    background-color: #2d1f01;
-    color: #cfb8aa;
-    font-weight: 700;
-    
-} */
 
 canvas {
     display: block;
     margin: 0;
     position: absolute;
-    top: 190%;
+    top: 200%;
     left: 50%;
     transform: translate(-50%, -25%);
     max-width: 100%;
     max-height: 50vw;
 
   }
-
-
 
   /* _________________________________________________________ */
 
@@ -135,7 +122,7 @@ footer{
     right: 0;
     background: #9b6e52;
     height: auto;
-    width: 100vw;
+    width: 100%;
     border-top:  solid rgb(207, 184, 170);
     padding-top: 10px;
     color: #2d1f01;
@@ -164,7 +151,7 @@ footer{
     background: #2d1f01;
     color: #9b6e52;
 
-    width: 100vw;
+    width: 100%;
     padding: 20px;
 padding-bottom: 40px;
     text-align: center;
