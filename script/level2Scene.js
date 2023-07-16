@@ -15,7 +15,7 @@ class Level2Scene extends Phaser.Scene {
 
         this.load.image('background', '../assets/Forest-BG2.jfif');
         this.load.image('dungeon_tiles', '../assets/tilemap_packed.png');
-        this.load.tilemapTiledJSON('map', '../json/tilesLayer.json');
+        this.load.tilemapTiledJSON('map', '../json/maze2.json');
 
        
         let player=this.load.spritesheet('player','assets/player.png',
@@ -110,31 +110,42 @@ class Level2Scene extends Phaser.Scene {
         this.game_music.play({loop:true})
 
 
+        //Setting the character's speed
+        this.speed = 100;
     }
 
   
     update(){
-        this.player.setVelocity(0);
-        if (this.cursors.left.isDown) {
-            this.player.setVelocityX(-50);
-            this.player.anims.play('left', true);
-        } 
-        else if (this.cursors.right.isDown) {
-            this.player.setVelocityX(50);
-            this.player.anims.play('right', true);
-        }
-        else if (this.cursors.up.isDown) {
-            this.player.setVelocityY(-50);
-            this.player.anims.play('up', true);
-        }
-        else if (this.cursors.down.isDown) {
-            this.player.setVelocityY(50);
-            this.player.anims.play('down', true);
-        } 
-        else {
-            this.player.anims.stop();
-        }
-    }
+        if (this.movable) { 
+            this.player.setVelocity(0);
+            if (this.cursors.left.isDown) {
+              this.player.setVelocityX(-this.speed);
+              this.player.anims.play('left', true);
+            } 
+            else if (this.cursors.right.isDown) {
+              this.player.setVelocityX(this.speed);
+              this.player.anims.play('right', true);
+            } else {
+              this.player.anims.stop();
+            }
+            
+            if (this.cursors.up.isDown) {
+                this.player.setVelocityY(-this.speed);
+                this.player.anims.play('up', true);
+              }
+              else if (this.cursors.down.isDown) {
+                this.player.setVelocityY(this.speed);
+                this.player.anims.play('down', true);
+              } 
+              else {
+                this.player.anims.stop();
+              }
+            } else {
+              this.player.anims.stop();
+              this.player.setVelocityY(-5);
+            }
+          } 
+    
 
     volumeButton(){
         if(this.volume_on == true)

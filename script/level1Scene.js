@@ -59,36 +59,36 @@ class Level1Scene extends Phaser.Scene {
     this.player.scale=0.2;
     this.player.depth=1;
     this.anims.create({
-        key:'right',
-        frames:this.anims.generateFrameNumbers("player",{start:0,end:3}),
-        frameRate:8,
-        repeat:-1
-    });
-    this.anims.create({
-        key:'left',
-        frames:this.anims.generateFrameNumbers("player",{start:4,end:7}),
-        frameRate:8,
-        repeat:-1
-    });
+      key:'right',
+      frames:this.anims.generateFrameNumbers("player",{start:0,end:3}),
+      frameRate:8,
+      repeat:-1
+  });
+  this.anims.create({
+      key:'left',
+      frames:this.anims.generateFrameNumbers("player",{start:4,end:7}),
+      frameRate:8,
+      repeat:-1
+  });
 
-    this.anims.create({
-        key:'up',
-        frames:this.anims.generateFrameNumbers("player",{start:8,end:11}),
-        frameRate:8,
-        repeat:-1
-    });
-    this.anims.create({
-        key:'down',
-        frames:this.anims.generateFrameNumbers("player",{start:12,end:15}),
-        frameRate:8,
-        repeat:-1
-    });
-    this.anims.create({
-        key:'thrust',
-        frames:this.anims.generateFrameNumbers("player"),
-        frameRate:8,
-        repeat:-1
-    });    
+  this.anims.create({
+      key:'up',
+      frames:this.anims.generateFrameNumbers("player",{start:8,end:11}),
+      frameRate:8,
+      repeat:-1
+  });
+  this.anims.create({
+      key:'down',
+      frames:this.anims.generateFrameNumbers("player",{start:12,end:15}),
+      frameRate:8,
+      repeat:-1
+  });
+  this.anims.create({
+      key:'thrust',
+      frames:this.anims.generateFrameNumbers("player"),
+      frameRate:8,
+      repeat:-1
+  });
     this.cursors = this.input.keyboard.createCursorKeys();    
     this.player.setCollideWorldBounds(true);
     this.physics.add.collider(player,tilesLayer);
@@ -207,16 +207,14 @@ class Level1Scene extends Phaser.Scene {
 
     this.movable = true;
 
-
-    this.speed = 200;
+    //Setting The Character's speed
+    this.speed = 100;
 
     }
 
     update(){
-
       console.log("Level 1");
-      if (this.movable) {
-        
+      if (this.movable) { 
         this.player.setVelocity(0);
         if (this.cursors.left.isDown) {
           this.player.setVelocityX(-this.speed);
@@ -225,7 +223,7 @@ class Level1Scene extends Phaser.Scene {
         else if (this.cursors.right.isDown) {
           this.player.setVelocityX(this.speed);
           this.player.anims.play('right', true);
-        }else {
+        } else {
           this.player.anims.stop();
         }
         
