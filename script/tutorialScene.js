@@ -1,70 +1,41 @@
 
 
-class MenuScene extends Phaser.Scene {
+class TutorialScene extends Phaser.Scene {
 
     constructor(){
-        super({key: 'menuScene'})
-        this.menu_scene_image = null
-        this.menu_scene_title = null
-        this.menu_scene_title_style = {
-            fontFamily: 'poppens',
-            fontSize: '60px',
-            fontWeight: "bold",
-            color: '#ffffff',
-            align: 'center'
-        }
+        super({key: 'tutorialScene'})
     }
 
     init(data){
-        this.cameras.main.setBackgroundColor('#000000')
+        this.cameras.main.setBackgroundColor('#ffffff')
     }
 
     preload(){
-        console.log('menu Scene is working')
-        
+        console.log('tutorial Scene is working')
         this.load.image('menuSceneBg','../assets/menuBg.jpg')
-        this.load.image('startButton','../assets/startButton.jpeg')
-        this.load.image('tutorialButton','../assets/tutorialButton.jpeg')
+        this.load.image('homeIcon', '../assets/homeIcon.png')
         this.load.image('micOn','../assets/micOn.png')
         this.load.image('micOff','../assets/micOff.png')
+        this.load.audio('menuMusic','../assets/sounds/menuSound.mp3')
         this.load.image('textBg','../assets/textBg.png')
 
-        this.load.audio('menuMusic','../assets/sounds/menuSound.mp3')
     }
 
     create(data){
-        
+
         this.menu_scene_image =this.add.sprite(0,0,'menuSceneBg')
         this.menu_scene_image.setScale(0.762)
         this.menu_scene_image.x = 800/2
         this.menu_scene_image.y = 600/2
 
         this.title_bg = this.add.sprite(0,0,'textBg')
-        this.title_bg.setScale(0.5)
-        this.title_bg.x = 680
-        this.title_bg.y = 515
-
-        this.menu_scene_title = this.add.text(595,490, "MAZE", this.menu_scene_title_style)
-
-        
-        this.start_button= this.add.sprite(0,0,'startButton')
-        this.start_button.setScale(0.762)
-        this.start_button.x = 130
-        this.start_button.y = 240
-        this.start_button.setInteractive({useHandCursor: true})
-        this.start_button.on('pointerdown',() => this.clickStartButton())
-        
-        
-        this.tutorial_button= this.add.sprite(0,0,'tutorialButton')
-        this.tutorial_button.setScale(0.762)
-        this.tutorial_button.x = 145
-        this.tutorial_button.y = 330
-        this.tutorial_button.setInteractive({useHandCursor: true})
-        this.tutorial_button.on('pointerdown',() => this.clickTutorialButton())
+        this.title_bg.setScale(1.3)
+        this.title_bg.x = 400
+        this.title_bg.y = 300
 
         this.menu_music = this.sound.add('menuMusic')
         this.menu_music.play({loop:true})
-        
+
         this.mic_off_image =this.add.sprite(0,0,'micOff')
         this.mic_off_image.setScale(0.1)
         this.mic_off_image.x = 23
@@ -82,11 +53,20 @@ class MenuScene extends Phaser.Scene {
         this.mic_on_image.on('pointerdown',() => this.volumeButton())
         this.volume_on = true
 
+        this.home_icon =this.add.sprite(0,0,'homeIcon')
+        this.home_icon.setScale(0.1)
+        this.home_icon.x = 780
+        this.home_icon.y = 580
+        this.home_icon.setInteractive({useHandCursor: true})
+        this.home_icon.on('pointerdown',() => this.homeIcon())
+
+
     }
 
     update (time,delta){
+
     }
-    
+
     volumeButton(){
         if(this.volume_on == true)
         {
@@ -103,16 +83,13 @@ class MenuScene extends Phaser.Scene {
             this.mic_on_image.setVisible(true)
         }
     }
-    clickStartButton(){
-        this.menu_music.stop()
-        this.scene.start('level1Scene')
-    }
-    clickTutorialButton(){
-        this.menu_music.stop()
-        this.scene.start('tutorialScene')
-    }
 
-
+    homeIcon(){
+        
+        this.scene.stop('tutorialScene'); 
+        this.scene.start('menuScene')
+        this.menu_music.stop()
+    }
 }
 
-export default MenuScene
+export default TutorialScene
