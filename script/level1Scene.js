@@ -29,6 +29,8 @@ class Level1Scene extends Phaser.Scene {
         this.load.image('coin','../assets/coin.png')
         this.load.image('finish','../assets/finish.jpeg')
         this.load.image('board','../assets/board.png')
+        this.load.image('menu','../assets/menu.png')
+        this.load.image('next','../assets/next.png')
      }
 
   create(data){
@@ -121,7 +123,6 @@ class Level1Scene extends Phaser.Scene {
       this.score += 5;
       console.log('your score is : ' + this.score );
     }
-
     //finding the near coins to the path
     this.pickCoinNear = function(pl, coin){
       coin.destroy();
@@ -130,9 +131,21 @@ class Level1Scene extends Phaser.Scene {
     }
 
     this.hitFinish = function (pl, finito) {
+      
       this.board = this.add.image(90, 100, 'board').setOrigin(0, 0);
       this.board.setScale(2.2)
-      this.add.text(180, 200, 'You won, your score is: ' + this.score, { fontSize: '42px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff'});
+      
+      this.add.text(180, 200, 'You won, your score is:', { fontSize: '42px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff'});
+      this.add.text(380, 250, this.score, { fontSize: '42px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff'});
+      
+      this.menu = this.add.image(220, 300, 'menu').setOrigin(0, 0)
+      this.menu.on('pointerdown',() => this.scene.switch('menuScene'))
+      this.menu.setInteractive({useHandCursor: true})
+
+      this.next = this.add.image(400, 290, 'next').setOrigin(0, 0)
+      this.next.on('pointerdown',() => this.scene.switch('level2Scene'))
+      this.next.setInteractive({useHandCursor: true})
+
       this.movable = false
     }
 
@@ -200,6 +213,8 @@ class Level1Scene extends Phaser.Scene {
     }
 
     update(){
+
+      console.log("Level 1");
       if (this.movable) {
         
         this.player.setVelocity(0);
