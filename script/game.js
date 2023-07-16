@@ -10,7 +10,6 @@ const level1_scene = new Level1Scene()
 const title_scene = new TitleScene()
 const menu_scene = new MenuScene()
 
-
 const config = {
     type: Phaser.AuTO,
     width:800,
@@ -18,7 +17,7 @@ const config = {
     physics:{
         default: 'arcade',
         arcade: {
-            debug: true
+            debug: false
         }
     },
 
