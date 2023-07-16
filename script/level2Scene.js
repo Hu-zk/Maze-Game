@@ -12,41 +12,54 @@ class Level2Scene extends Phaser.Scene {
 
     preload(){
         console.log('level2 Scene is working')
-        this.load.image('level2_scene_bg','../assets/menuBg.jpg')
 
+        this.load.image('background', '../assets/Forest-BG2.jfif');
+        this.load.image('dungeon_tiles', '../assets/tilemap_packed.png');
+        this.load.tilemapTiledJSON('map', '../json/maze2.json');
 
-      
-        this.load.image('dungeon_tiles', 'Photos/tilemap_packed.png');
-        this.load.tilemapTiledJSON('map', 'assets/maze2.json');
+        this.load.image('player', '../assets/Player1.png');
 
-
-        this.load.image('player', 'Photos/Player1.png');
-
+        this.load.audio('gameMusic','../assets/sounds/gameSound.mp3')
     }
 
 
-       create(data){
-        this.level1_scene_bg =this.add.sprite(0,0,'level1_scene_bg')
-        this.level1_scene_bg.setScale(0.75)
-        this.level1_scene_bg.x = 800/2
-        this.level1_scene_bg.y = 600/2
+    create(data){
+
+        const background = this.add.image(0, 0, 'background').setOrigin(0, 0);
+        background.setScale(this.game.config.width / background.width, this.game.config.height / background.height);
+
+        this.mic_off_image =this.add.sprite(0,0,'micOff')
+        this.mic_off_image.setScale(0.1)
+        this.mic_off_image.x = 15
+        this.mic_off_image.y = 584
+        this.mic_off_image.setInteractive({useHandCursor: true})
+        this.mic_off_image.on('pointerdown',() => this.volumeButton())
+        this.mic_off_image.setVisible(false)
 
 
-            const background = this.add.image(0, 0, 'background').setOrigin(0, 0);
-            background.setScale(this.game.config.width / background.width, this.game.config.height / background.height);
+        this.mic_on_image =this.add.sprite(0,0,'micOn')
+        this.mic_on_image.setScale(0.1)
+        this.mic_on_image.x = 15
+        this.mic_on_image.y = 584
+        this.mic_on_image.setInteractive({useHandCursor: true})
+        this.mic_on_image.on('pointerdown',() => this.volumeButton())
+        this.volume_on = true    
 
-            const map = this.make.tilemap({ key: 'map' });
-            const tileset = map.addTilesetImage('tilemap_packed', 'dungeon_tiles');
-            const Layer = map.createLayer('Tile Layer 1', tileset, 0, 0);
-            const tilesLayer= map.createLayer("tileslayer",tileset,0,0);
+        this.game_music = this.sound.add('gameMusic')
+        this.game_music.play({loop:true})
 
-            // Calculate the position to center the tileset
-            const centerX = (this.game.config.width - map.widthInPixels) / 2;
-            const centerY = (this.game.config.height - map.heightInPixels) / 2;
+        const map = this.make.tilemap({ key: 'map' });
+        const tileset = map.addTilesetImage('tilemap_packed', 'dungeon_tiles');
+        const Layer = map.createLayer('Tile Layer 1', tileset, 0, 0);
+        const tilesLayer= map.createLayer("tileslayer",tileset,0,0);
 
-            // Move the tileset layer to the center
-                Layer.setPosition(centerX, centerY);
-                tilesLayer.setPosition(centerX,centerY);
+        // Calculate the position to center the tileset
+        const centerX = (this.game.config.width - map.widthInPixels) / 2;
+        const centerY = (this.game.config.height - map.heightInPixels) / 2;
+
+        // Move the tileset layer to the center
+        Layer.setPosition(centerX, centerY);
+        tilesLayer.setPosition(centerX,centerY);
             
 
 
@@ -114,14 +127,28 @@ class Level2Scene extends Phaser.Scene {
         };
         
 
-            }
-            
+    }
+    update (time,delta){
 
+    }
 
-            
-            update (time,delta){
-
-            }
+    volumeButton(){
+        if(this.volume_on == true)
+        {
+            this.game_music.stop()
+            this.volume_on = false
+            this.mic_off_image.setVisible(true)
+            this.mic_on_image.setVisible(false)
         }
+        else
+        {
+            this.game_music.play()
+            this.volume_on = true
+            this.mic_off_image.setVisible(false)
+            this.mic_on_image.setVisible(true)
+        }
+    }
 
-        export default Level2Scene
+}
+
+export default Level2Scene
