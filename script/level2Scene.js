@@ -160,23 +160,29 @@ class Level2Scene extends Phaser.Scene {
         }
 
         this.hitFinish = function (pl, finito) {
-            
+        if (this.coinsCounter >= 3 && this.initialTime > 0) {
+            // Player has at least 3 coins and finished within the time limit, perform win logic here
+
             this.board = this.add.image(90, 100, 'board').setOrigin(0, 0);
-            this.board.setScale(2.2)
-            
+            this.board.setScale(2.2);
+
             this.add.text(180, 200, 'You won, your score is:', { fontSize: '42px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff'});
             this.add.text(380, 250, this.score, { fontSize: '42px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff'});
-            
-            this.menu = this.add.image(300, 300, 'menu').setOrigin(0, 0)
-            this.menu.setInteractive({useHandCursor: true})
-            this.menu.on('pointerdown',() => 
-            {
-                this.scene.switch('menuScene')
-                this.game_music.stop()
-            })
 
-            this.movable = false
-        }
+            this.menu = this.add.image(300, 300, 'menu').setOrigin(0, 0);
+            this.menu.setInteractive({useHandCursor: true});
+            this.menu.on('pointerdown',() => {
+            this.scene.switch('menuScene');
+            this.game_music.stop();
+            });
+
+            this.movable = false;
+        } else {
+            // Player does not meet win conditions, perform loss logic here
+            this.gameOver();
+  }
+};
+
         
         //Creating and Positioning the coins
         this.coin1 = this.physics.add.sprite(80, 350,'coin')
@@ -243,6 +249,16 @@ class Level2Scene extends Phaser.Scene {
 
         this.coinsCounter = 0;
     this.coinsCounterLabel = this.add.text(50, 17, ' 0 coins', { fontSize: '14px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
+
+
+       // Initialize the timer variables
+         this.initialTime = 20; // Set the initial time in seconds
+         this.timerText = this.add.text(780, 20, 'Time: ' + this.initialTime, { fontSize: '14px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
+         this.timerText.setOrigin(1, 0);
+         this.timerEvent = this.time.addEvent({ delay: 1000, callback: this.updateTimer, callbackScope: this, loop: true });
+
+
+
 
     }
 
@@ -314,6 +330,25 @@ class Level2Scene extends Phaser.Scene {
         this.game_music.stop()
     }
     
+
+
+    updateTimer() {
+        this.initialTime--;
+
+    if (this.initialTime < 0 || (this.initialTime === 0 && this.coinsCounter < 3)) {
+        // Time's up or player ran out of time without enough coins, perform loss logic here
+        this.timerEvent.remove();
+        this.gameOver();
+    } else {
+        this.timerText.setText('Time: ' + this.initialTime);
+    }
+}
+
+
+
+
+
+
     
     }
 
