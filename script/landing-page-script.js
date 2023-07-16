@@ -63,3 +63,18 @@ window.scrollTo(0,0);
 
 document.onscrollend = event => {}
 
+
+
+
+
+
+
+function jAlert(text, customokay){
+	document.getElementById('msg-content').innerHTML = text;
+    document.getElementById('press-ok').innerHTML = customokay;
+    document.body.style.backgroundColor = "black";
+    document.body.style.height= "20%";
+    document.body.style.cursor="wait";
+}
+
+jAlert("Stop! hellooooooooo!", "<b>Okay!</b>");
