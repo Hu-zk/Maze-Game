@@ -25,9 +25,10 @@ class MenuScene extends Phaser.Scene {
         this.load.image('menuSceneBg','../assets/menuBg.jpg')
         this.load.image('startButton','../assets/startButton.jpeg')
         this.load.image('levelButton','../assets/levelButton.jpeg')
-        this.load.image('mic','../assets/mic.jpeg')
+        this.load.image('micOn','../assets/micOn.jpeg')
+        this.load.image('micOff','../assets/micOff.jpeg')
 
-        this.load.audio('menuMusic','assets/sounds/menuSound.mp3')
+        this.load.audio('menuMusic','../assets/sounds/menuSound.mp3')
     }
 
     create(data){
@@ -57,26 +58,51 @@ class MenuScene extends Phaser.Scene {
         this.menu_music = this.sound.add('menuMusic')
         this.menu_music.play({loop:true})
         
-        this.mic_image =this.add.sprite(0,0,'mic')
-        this.mic_image.setScale(0.1)
-        this.mic_image.x = 16
-        this.mic_image.y = 583
-        this.mic_image.setInteractive({useHandCursor: true})
+        this.mic_off_image =this.add.sprite(0,0,'micOff')
+        this.mic_off_image.setScale(0.1)
+        this.mic_off_image.x = 15
+        this.mic_off_image.y = 584
+        this.mic_off_image.setInteractive({useHandCursor: true})
+        this.mic_off_image.on('pointerdown',() => this.volumeButton())
+        this.mic_off_image.setVisible(false)
+
+
+        this.mic_on_image =this.add.sprite(0,0,'micOn')
+        this.mic_on_image.setScale(0.1)
+        this.mic_on_image.x = 15
+        this.mic_on_image.y = 584
+        this.mic_on_image.setInteractive({useHandCursor: true})
+        this.mic_on_image.on('pointerdown',() => this.volumeButton())
+        this.volume_on = true
 
     }
 
     update (time,delta){
     }
-
+    
+    volumeButton(){
+        if(this.volume_on == true)
+        {
+            this.menu_music.stop()
+            this.volume_on = false
+            this.mic_off_image.setVisible(true)
+            this.mic_on_image.setVisible(false)
+        }
+        else
+        {
+            this.menu_music.play()
+            this.volume_on = true
+            this.mic_off_image.setVisible(false)
+            this.mic_on_image.setVisible(true)
+        }
+    }
     clickStartButton(){
+        this.menu_music.stop()
         this.scene.start('level1Scene')
     }
     clickLevelButton(){
-        this.scene.start('level1Scene')
-    }
-    clickmic(){
-
-
+        this.menu_music.stop()
+        this.scene.start('level2Scene')
     }
 
 
