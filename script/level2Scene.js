@@ -134,6 +134,10 @@ class Level2Scene extends Phaser.Scene {
         this.pickCoinFar = function(pl, coin){
             coin.destroy();
             this.score += 5;
+
+            this.coinsCounter++;
+            this.coinsCounterLabel.setText('You have ' + this.coinsCounter + ' coins');
+
             console.log('your score is : ' + this.score );
         }
 
@@ -141,6 +145,10 @@ class Level2Scene extends Phaser.Scene {
         this.pickCoinNear = function(pl, coin){
             coin.destroy();
             this.score += 1;
+
+            this.coinsCounter++;
+            this.coinsCounterLabel.setText('You have ' + this.coinsCounter + ' coins');
+            
             console.log('your score is : ' + this.score );
         }
 
@@ -225,7 +233,9 @@ class Level2Scene extends Phaser.Scene {
         this.speed = 300;
 
         //Finding the far coins from the path
-    
+
+        this.coinsCounter = 0;
+    this.coinsCounterLabel = this.add.text(20, 20, 'You Have : 0 coins', { fontSize: '14px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
 
     }
 
