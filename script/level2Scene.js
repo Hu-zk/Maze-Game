@@ -161,6 +161,7 @@ class Level2Scene extends Phaser.Scene {
 
         this.hitFinish = function (pl, finito) {
             
+            this.timerEvent.remove();
             this.board = this.add.image(90, 100, 'board').setOrigin(0, 0);
             this.board.setScale(2.2)
             
@@ -175,7 +176,7 @@ class Level2Scene extends Phaser.Scene {
                 this.scene.switch('menuScene')
             })
 
-            this.next = this.add.image(400, 300, 'next2').setOrigin(0, 0);
+            this.next = this.add.image(400, 300, 'next').setOrigin(0, 0);
             this.next.setInteractive({useHandCursor: true})
             this.next.on('pointerdown',() => 
             {
