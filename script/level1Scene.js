@@ -158,7 +158,8 @@ class Level1Scene extends Phaser.Scene {
         }
 
        this.hitFinish = function (pl, finito) {
-    if (this.coinsCounter >= 3 && this.initialTime > 0) {
+
+        this.timerEvent.remove();
         this.board = this.add.image(90, 100, 'board').setOrigin(0, 0);
         this.board.setScale(2.2);
 
@@ -180,16 +181,27 @@ class Level1Scene extends Phaser.Scene {
         });
 
         this.movable = false;
-    } else {
-        // Handle the case when the player does not meet the win conditions
-        if (this.coinsCounter < 3) {
-            console.log("You need at least 3 coins to win!");
-        }
-        if (this.initialTime <= 0) {
-            console.log("Time's up! You lost!");
-        }
-    }
-};
+        };
+
+        this.gameOver = function () {
+
+            this.board = this.add.image(90, 100, 'board').setOrigin(0, 0);
+            this.board.setScale(2.2);
+
+            this.add.text(180, 150, 'You Lost, Time is Up:', { fontSize: '42px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff'});
+            this.add.text(180, 200, 'your score is:', { fontSize: '42px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff'});
+            this.add.text(380, 250, this.score, { fontSize: '42px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff'});
+
+            this.menu = this.add.image(300, 300, 'menu').setOrigin(0, 0);
+            this.menu.setInteractive({useHandCursor: true});
+            this.menu.on('pointerdown',() => {
+            this.scene.switch('menuScene');
+            this.game_music.stop();
+            });
+
+            this.movable = false;
+            
+        };
 
         
         //Creating and Positioning the coins
