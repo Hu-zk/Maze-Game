@@ -165,8 +165,9 @@ class Level1Scene extends Phaser.Scene {
         this.board = this.add.image(90, 100, 'board').setOrigin(0, 0);
         this.board.setScale(2.2);
 
-        this.add.text(180, 220, 'You won, your score is:', { margin:'10', fontSize: '46px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
-        this.add.text(380, 250, this.score, { fontSize: '46px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
+        this.add.text(300, 200, 'You won', { margin:'10', fontSize: '46px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
+        this.add.text(250, 240, 'Your score is:\n', { margin:'10', fontSize: '46px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
+        this.add.text(380, 270, this.score, { fontSize: '46px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
 
         this.menu = this.add.image(220, 350, 'menu').setOrigin(0, 0);
         this.menu.setInteractive({ useHandCursor: true });

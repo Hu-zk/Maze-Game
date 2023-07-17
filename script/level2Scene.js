@@ -167,9 +167,10 @@ class Level2Scene extends Phaser.Scene {
             this.board = this.add.image(90, 100, 'board').setOrigin(0, 0);
             this.board.setScale(2.2)
             
-            this.add.text(180, 200, 'You won, your score is:', { fontSize: '42px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff'});
-            this.add.text(380, 250, this.score, { fontSize: '42px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff'});
-            
+            this.add.text(300, 200, 'You won', { margin:'10', fontSize: '46px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
+            this.add.text(250, 240, 'Your score is:\n \n', { margin:'10', fontSize: '46px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
+            this.add.text(380, 270, this.score, { fontSize: '46px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
+
             this.menu = this.add.image(200, 310, 'menu').setOrigin(0, 0)
             this.menu.setInteractive({useHandCursor: true})
             this.menu.on('pointerdown',() => 
@@ -280,7 +281,7 @@ class Level2Scene extends Phaser.Scene {
         //Finding the far coins from the path
 
         this.coinsCounter = 0;
-    this.coinsCounterLabel = this.add.text(50, 17, ' 0 coins', { fontSize: '14px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
+        this.coinsCounterLabel = this.add.text(50, 17, ' 0 coins', { fontSize: '14px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
 
 
        // Initialize the timer variables
