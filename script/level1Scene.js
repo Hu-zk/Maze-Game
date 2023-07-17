@@ -35,6 +35,8 @@ class Level1Scene extends Phaser.Scene {
         this.load.image('menu','../assets/menu.png')
         this.load.image('next','../assets/next.png')
         this.load.image('gold','../assets/gold.png')
+        this.load.image('door','../assets/door.png')
+        this.load.image('replay','../assets/replay.png')
     }
     
     create(data){
@@ -192,16 +194,32 @@ class Level1Scene extends Phaser.Scene {
             this.add.text(180, 200, 'your score is:', { fontSize: '42px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff'});
             this.add.text(380, 250, this.score, { fontSize: '42px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff'});
 
-            this.menu = this.add.image(300, 300, 'menu').setOrigin(0, 0);
+            this.menu = this.add.image(180, 340, 'menu').setOrigin(0, 0);
             this.menu.setInteractive({useHandCursor: true});
             this.menu.on('pointerdown',() => {
-            this.scene.switch('menuScene');
-            this.game_music.stop();
+                this.scene.switch('menuScene');
+                this.game_music.stop();
             });
+
+            this.replay = this.add.image(400, 340, 'replay').setOrigin(0, 0);
+            this.replay.setInteractive({ useHandCursor: true });
+            this.replay.on('pointerdown', () => {
+                this.scene.restart('level1Scene');
+                this.game_music.stop();
+        });
 
             this.movable = false;
             
         };
+
+        //Adding the dungeon Door
+        this.door = this.physics.add.sprite(405,580, 'door');
+        this.door.setScale(0.15, 0.10)
+        this.door.setCollideWorldBounds(true);
+        this.physics.add.collider(player,this.door);
+        this.door.setImmovable(true)
+        
+
 
         
         //Creating and Positioning the coins
