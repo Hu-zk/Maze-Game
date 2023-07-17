@@ -284,10 +284,10 @@ class Level2Scene extends Phaser.Scene {
 
 
        // Initialize the timer variables
-         this.initialTime = 20; // Set the initial time in seconds
-         this.timerText = this.add.text(780, 20, 'Time: ' + this.initialTime, { fontSize: '14px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
-         this.timerText.setOrigin(1, 0);
-         this.timerEvent = this.time.addEvent({ delay: 1000, callback: this.updateTimer, callbackScope: this, loop: true });
+        this.initialTime = 23; // Set the initial time in seconds
+        this.timerText = this.add.text(780, 20, 'Time: ' + this.initialTime, { fontSize: '14px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
+        this.timerText.setOrigin(1, 0);
+        this.timerEvent = this.time.addEvent({ delay: 1000, callback: this.updateTimer, callbackScope: this, loop: true });
 
 
 

@@ -159,7 +159,7 @@ class Level1Scene extends Phaser.Scene {
         console.log('your score is : ' + this.score );
         }
 
-       this.hitFinish = function (pl, finito) {
+        this.hitFinish = function (pl, finito) {
 
         this.timerEvent.remove();
         this.board = this.add.image(90, 100, 'board').setOrigin(0, 0);
@@ -288,10 +288,10 @@ class Level1Scene extends Phaser.Scene {
         this.coinsCounter = 0;
 
          // Initialize the timer variables
-         this.initialTime = 20; // Set the initial time in seconds
-         this.timerText = this.add.text(780, 20, 'Time: ' + this.initialTime, { fontSize: '14px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
-         this.timerText.setOrigin(1, 0);
-         this.timerEvent = this.time.addEvent({ delay: 1000, callback: this.updateTimer, callbackScope: this, loop: true });
+        this.initialTime = 23; // Set the initial time in seconds
+        this.timerText = this.add.text(780, 20, 'Time: ' + this.initialTime, { fontSize: '14px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
+        this.timerText.setOrigin(1, 0);
+        this.timerEvent = this.time.addEvent({ delay: 1000, callback: this.updateTimer, callbackScope: this, loop: true });
 
 
         this.coinsCounterLabel = this.add.text(50, 17, ' 0 coins', { fontSize: '14px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
@@ -368,25 +368,18 @@ class Level1Scene extends Phaser.Scene {
         this.game_music.stop()
     }
 
-   
     updateTimer() {
-        this.initialTime--;
+    this.initialTime--;
 
-    if (this.initialTime < 0 || (this.initialTime === 0 && this.coinsCounter < 3)) {
+    if (this.initialTime < 0 || (this.initialTime === 0 && this.coinsCounter < 4)) {
         // Time's up or player ran out of time without enough coins, perform loss logic here
         this.timerEvent.remove();
         this.gameOver();
     } else {
         this.timerText.setText('Time: ' + this.initialTime);
     }
-}
-
-
-
-
-
-
-
     }
+
+}
 
     export default Level1Scene
