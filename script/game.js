@@ -3,12 +3,15 @@ import Level1Scene from "./level1Scene.js"
 import TitleScene from "./titleScene.js"
 import MenuScene from "./menuScene.js"
 import TutorialScene from "./tutorialScene.js"
+import EndScene from "./endScene.js"
+
 
 const level2_scene = new Level2Scene()
 const level1_scene = new Level1Scene()
 const title_scene = new TitleScene()
 const menu_scene = new MenuScene()
 const tutorial_scene = new TutorialScene()
+const end_scene = new EndScene()
 
 const config = {
     type: Phaser.AUTO,
@@ -31,5 +34,6 @@ game.scene.add('level2Scene', level2_scene)
 game.scene.add('titleScene', title_scene)
 game.scene.add('menuScene', menu_scene)
 game.scene.add('tutorialScene', tutorial_scene)
+game.scene.add('endScene', end_scene)
 
 game.scene.start('titleScene')
