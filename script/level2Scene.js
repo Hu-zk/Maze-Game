@@ -29,10 +29,10 @@ class Level2Scene extends Phaser.Scene {
         this.load.image('restartIcon', '../assets/restartIcon.png');
 
         this.load.image('coin','../assets/coin.png')
-        this.load.image('finish','../assets/finish.jpeg')
+        this.load.image('finish2','../assets/finish.jpeg')
         this.load.image('board','../assets/board.png')
         this.load.image('menu','../assets/menu.png')
-        this.load.image('next','../assets/next.png')
+        this.load.image('next2','../assets/next.png')
 
         }
 
@@ -152,7 +152,7 @@ class Level2Scene extends Phaser.Scene {
             console.log('your score is : ' + this.score );
         }
 
-        this.hitFinish = function (pl, finito) {
+        this.hitFinish2 = function (pl, finito) {
             
             this.board = this.add.image(90, 100, 'board').setOrigin(0, 0);
             this.board.setScale(2.2)
@@ -160,12 +160,20 @@ class Level2Scene extends Phaser.Scene {
             this.add.text(180, 200, 'You won, your score is:', { fontSize: '42px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff'});
             this.add.text(380, 250, this.score, { fontSize: '42px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff'});
             
-            this.menu = this.add.image(300, 300, 'menu').setOrigin(0, 0)
+            this.menu = this.add.image(200, 310, 'menu').setOrigin(0, 0)
             this.menu.setInteractive({useHandCursor: true})
             this.menu.on('pointerdown',() => 
             {
-                this.scene.switch('menuScene')
                 this.game_music.stop()
+                this.scene.switch('menuScene')
+            })
+
+            this.next = this.add.image(400, 300, 'next2').setOrigin(0, 0);
+            this.next.setInteractive({useHandCursor: true})
+            this.next.on('pointerdown',() => 
+            {
+                this.game_music.stop()
+                this.scene.switch('endScene')
             })
 
             this.movable = false
@@ -183,7 +191,7 @@ class Level2Scene extends Phaser.Scene {
 
         //Creating and Positioning the Finish point
 
-        this.finish = this.physics.add.sprite(800, 155,'finish')
+        this.finish = this.physics.add.sprite(800, 155,'finish2')
         this.finish.setScale(0.045, 0.05)
 
         //Giving the coins the right size
@@ -224,7 +232,7 @@ class Level2Scene extends Phaser.Scene {
 
 
         //Assigning the overlap coins action
-        this.physics.add.overlap(this.player, this.finish, this.hitFinish, null, this);
+        this.physics.add.overlap(this.player, this.finish, this.hitFinish2, null, this);
 
 
         this.movable = true;
@@ -235,7 +243,7 @@ class Level2Scene extends Phaser.Scene {
         //Finding the far coins from the path
 
         this.coinsCounter = 0;
-    this.coinsCounterLabel = this.add.text(20, 20, 'You Have : 0 coins', { fontSize: '14px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
+        this.coinsCounterLabel = this.add.text(20, 20, 'You Have : 0 coins', { fontSize: '14px', fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif', color: '#fff' });
 
     }
 
