@@ -176,6 +176,7 @@ class Level2Scene extends Phaser.Scene {
             this.menu.on('pointerdown',() => 
             {
                 this.game_music.stop()
+                this.scene.stop('level2Scene')
                 this.scene.switch('menuScene')
             })
 
@@ -184,6 +185,7 @@ class Level2Scene extends Phaser.Scene {
             this.next.on('pointerdown',() => 
             {
                 this.game_music.stop()
+                this.scene.stop('level2Scene')
                 this.scene.switch('endScene')
             })
 

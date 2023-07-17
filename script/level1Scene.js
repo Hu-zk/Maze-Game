@@ -171,14 +171,18 @@ class Level1Scene extends Phaser.Scene {
 
         this.menu = this.add.image(220, 350, 'menu').setOrigin(0, 0);
         this.menu.setInteractive({ useHandCursor: true });
-        this.menu.on('pointerdown', () => {
+        this.menu.on('pointerdown', () => 
+        {
+            this.scene.stop('level1Scene')
             this.scene.switch('menuScene');
             this.game_music.stop();
         });
 
         this.next = this.add.image(400, 340, 'next').setOrigin(0, 0);
         this.next.setInteractive({ useHandCursor: true });
-        this.next.on('pointerdown', () => {
+        this.next.on('pointerdown', () => 
+        {
+            this.scene.stop('level1Scene')
             this.scene.switch('level2Scene');
             this.game_music.stop();
         });
