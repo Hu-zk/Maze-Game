@@ -4,6 +4,8 @@ let bird2 = document.getElementById('bird2');
 let btn  = document.getElementById('btn');
 let rocks = document.getElementById('rocks');
 let forest = document.getElementById('forest');
+let footer = document.getElementById('footer');
+let sec = document.getElementById('sec');
 
 window.addEventListener('scroll', function(){
     let value = window.scrollY;
@@ -17,64 +19,36 @@ window.addEventListener('scroll', function(){
     forest.style.top = value * 0.25 + 'px'; 
 });
 
-
 let scrollerID;
 let paused = true;
-let speed = 2; // 1 - Fast | 2 - Medium | 3 - Slow
+let speed = 2; 
 let interval = speed *5;
 
-function startScroll(){
-    let id = setInterval(function() {
-        window.scrollBy(0,1);
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-            // Reached end of page
-            stopScroll();
-            
-        }
-    }, interval);
-    return id;
+function scrollToCanvas() {
+    sec.scrollIntoView({ behavior: 'smooth' });
+    
 }
 
-function stopScroll() {
-    clearInterval(scrollerID);
-}
-
-document.body.addEventListener('keypress', function (event)
-{
-
-    if (event.which == 13 || event.keyCode == 13) {
-        // It's the 'Enter' key
-        if(paused == true) {
-            scrollerID = startScroll();
-            paused = false;
-            
-        }
-        else {
-            stopScroll();
-            paused = true;
-        }
+function toggleScroll() {
+    if (paused) {
+        scrollerID = requestAnimationFrame(scrollDown);
+        paused = false;
+    } else {
+        stopScroll();
+        paused = true;
     }
-}, true);
-
-function scrollWindow()
-{
-window.scrollTo(0,0);
 }
 
-document.onscrollend = event => {}
+btn.addEventListener('click', function(event) {
+    event.preventDefault();
+    scrollToCanvas(); 
+    toggleScroll(); 
+});
 
-
-
-
-
-
-
-function jAlert(text, customokay){
-	document.getElementById('msg-content').innerHTML = text;
-    document.getElementById('press-ok').innerHTML = customokay;
-    document.body.style.backgroundColor = "black";
-    document.body.style.height= "20%";
-    document.body.style.cursor="wait";
-}
-
-jAlert("Stop! hellooooooooo!", "<b>Okay!</b>");
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        scrollToCanvas();
+        toggleScroll(); 
+    }
+});
